@@ -1,0 +1,144 @@
+/* Konan Travels - Admin Dashboard CSS */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  background: rgba(20, 20, 35, 0.4);
+  backdrop-filter: blur(30px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+.sidebar-nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+.sidebar-nav-link.active {
+  background: rgba(0, 243, 255, 0.1);
+  border-left: 3px solid #00f3ff;
+}
+.sidebar-nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Stats Cards */
+.stat-card {
+  transition: transform 0.3s ease;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+.stat-icon {
+  background: linear-gradient(135deg, #00f3ff, #0066ff);
+}
+
+/* Tables */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-table th {
+  background: rgba(0, 243, 255, 0.05);
+}
+.admin-table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.3s ease;
+}
+.admin-table tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Form Styles */
+.admin-form {
+  background: rgba(20, 20, 35, 0.4);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.admin-form-group {
+  position: relative;
+}
+.admin-form-group label {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+.admin-form-group input:focus,
+.admin-form-group textarea:focus {
+  border-color: #00f3ff;
+  box-shadow: 0 0 0 2px rgba(0, 243, 255, 0.2);
+}
+
+/* Status Badges */
+.status-pending {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+.status-confirmed {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+.status-completed {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+.status-cancelled {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+.status-in-progress {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+}
+
+/* Dashboard Charts Container */
+.chart-container {
+  background: rgba(20, 20, 35, 0.4);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* File Upload */
+.file-upload {
+  background: rgba(20, 20, 35, 0.4);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+.file-upload:hover {
+  border-color: #00f3ff;
+  background: rgba(0, 243, 255, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .sidebar.mobile-open {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

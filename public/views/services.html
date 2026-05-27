@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | Konan Travels</title>
+  <meta name="description" content="Premium travel and vehicle rental services">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#1a2935',
+              100: '#162129',
+              200: '#0f1821',
+              300: '#0b1218',
+              400: '#080c10',
+              500: '#040808',
+              600: '#000000',
+              700: '#0a1525',
+              800: '#02040a',
+              900: '#000000',
+            },
+            neon: {
+              cyan: '#00f3ff',
+              purple: '#bc13fe',
+              blue: '#0066ff',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.8s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #00f3ff 0%, #bc13fe 50%, #00f3ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -5px; left: 50%;
+      width: 0; height: 2px; background: linear-gradient(90deg, #00f3ff, #bc13fe);
+      transition: width 0.3s ease; transform: translateX(-50%);
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 60%; }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f3ff, #bc13fe); border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 top-0 glass-panel-lg border-b border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <a href="/" class="text-2xl font-bold gradient-text tracking-wider">
+          KONAN <span class="text-white">TRAVELS</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="nav-link text-sm font-medium">Home</a>
+          <a href="/services" class="nav-link active text-sm font-medium">Services</a>
+          <a href="/fleet" class="nav-link text-sm font-medium">Fleet</a>
+          <a href="/booking" class="nav-link text-sm font-medium">Book Now</a>
+          <a href="/about" class="nav-link text-sm font-medium">About</a>
+          <a href="/contact" class="nav-link text-sm font-medium">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] flex items-center pt-24 pb-16">
+    <div class="container-custom mx-auto px-4 text-center">
+      <div class="inline-block px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-400 text-sm mb-6 border border-cyan-500/20">
+        <i class="fas fa-rocket mr-2"></i> Premium Services
+      </div>
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Our Services</h1>
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+        Comprehensive travel and transportation solutions tailored to your specific needs
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="section-padding">
+    <div class="container-custom mx-auto">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Local Car Rental -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-car text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Local Car Rental</h3>
+          <p class="text-gray-400 mb-6">
+            Experience comfortable and affordable local rides within the city. Perfect for daily commutes, business meetings, or casual outings.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-cyan-400 mr-2"></i> Professional drivers</li>
+            <li><i class="fas fa-check text-cyan-400 mr-2"></i> Vehicle maintenance</li>
+            <li><i class="fas fa-check text-cyan-400 mr-2"></i> Flexible timing</li>
+            <li><i class="fas fa-check text-cyan-400 mr-2"></i> GPS tracking</li>
+          </ul>
+          <a href="/booking?service=local" class="inline-flex items-center text-cyan-400 font-medium hover:text-cyan-300">
+            Book Local Ride <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Outstation Trips -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-road text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Outstation Trips</h3>
+          <p class="text-gray-400 mb-6">
+            Plan your inter-city travel with comfort and convenience. Our well-maintained vehicles ensure a smooth journey across destinations.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-purple-400 mr-2"></i> Full-day/ Half-day plans</li>
+            <li><i class="fas fa-check text-purple-400 mr-2"></i> Fuel included</li>
+            <li><i class="fas fa-check text-purple-400 mr-2"></i> Driver allowances covered</li>
+            <li><i class="fas fa-check text-purple-400 mr-2"></i> Inter-city travel</li>
+          </ul>
+          <a href="/booking?service=outstation" class="inline-flex items-center text-purple-400 font-medium hover:text-purple-300">
+            Book Outstation <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Airport Transfer -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-amber-600 to-orange-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-plane text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Airport Transfer</h3>
+          <p class="text-gray-400 mb-6">
+            Reliable and punctual airport transportation. Book in advance and travel stress-free with our professional drivers.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-amber-400 mr-2"></i> Flight tracking</li>
+            <li><i class="fas fa-check text-amber-400 mr-2"></i> Meet and greet</li>
+            <li><i class="fas fa-check text-amber-400 mr-2"></i> Free waiting time</li>
+            <li><i class="fas fa-check text-amber-400 mr-2"></i> Flight delay support</li>
+          </ul>
+          <a href="/booking?service=airport" class="inline-flex items-center text-amber-400 font-medium hover:text-amber-300">
+            Book Airport Transfer <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Loading/Unloading -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-emerald-600 to-green-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-boxes text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Loading/Unloading</h3>
+          <p class="text-gray-400 mb-6">
+            Professional assistance for moving heavy goods and furniture. Our loading vehicles come with trained staff to help.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-emerald-400 mr-2"></i> Trained staff</li>
+            <li><i class="fas fa-check text-emerald-400 mr-2"></i> Equipment provided</li>
+            <li><i class="fas fa-check text-emerald-400 mr-2"></i> Safe handling</li>
+            <li><i class="fas fa-check text-emerald-400 mr-2"></i> Insurance coverage</li>
+          </ul>
+          <a href="/booking?service=loading" class="inline-flex items-center text-emerald-400 font-medium hover:text-emerald-300">
+            Book Loading Service <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- House Shifting -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-red-600 to-pink-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-home text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">House Shifting</h3>
+          <p class="text-gray-400 mb-6">
+            Complete home shifting solution with packing, loading, transport, and unloading. Your possessions, our priority.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-red-400 mr-2"></i> Full packing service</li>
+            <li><i class="fas fa-check text-red-400 mr-2"></i> Insurance coverage</li>
+            <li><i class="fas fa-check text-red-400 mr-2"></i> Safe transport</li>
+            <li><i class="fas fa-check text-red-400 mr-2"></i> Unpacking assistance</li>
+          </ul>
+          <a href="/booking?service=house_shifting" class="inline-flex items-center text-red-400 font-medium hover:text-red-300">
+            Book House Shifting <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Goods Transport -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-truck text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Goods Transport</h3>
+          <p class="text-gray-400 mb-6">
+            Reliable cargo transportation for businesses and individuals. From small parcels to large shipments, we deliver.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-teal-400 mr-2"></i> Timely delivery</li>
+            <li><i class="fas fa-check text-teal-400 mr-2"></i> Insurance support</li>
+            <li><i class="fas fa-check text-teal-400 mr-2"></i> Real-time tracking</li>
+            <li><i class="fas fa-check text-teal-400 mr-2"></i> Bulk discounts</li>
+          </ul>
+          <a href="/booking?service=goods" class="inline-flex items-center text-teal-400 font-medium hover:text-teal-300">
+            Book Goods Transport <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Tempo Traveller -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-bus text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Tempo Traveller</h3>
+          <p class="text-gray-400 mb-6">
+            Perfect for group travel with comfortable seating for up to 12 passengers. Ideal for family trips and corporate events.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-indigo-400 mr-2"></i> AC & Non-AC options</li>
+            <li><i class="fas fa-check text-indigo-400 mr-2"></i> Music system</li>
+            <li><i class="fas fa-check text-indigo-400 mr-2"></i> Water bottles</li>
+            <li><i class="fas fa-check text-indigo-400 mr-2"></i> Driver assistance</li>
+          </ul>
+          <a href="/booking?service=tempo" class="inline-flex items-center text-indigo-400 font-medium hover:text-indigo-300">
+            Book Tempo Traveller <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Driver On Demand -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-orange-600 to-yellow-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-user-tie text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Driver On Demand</h3>
+          <p class="text-gray-400 mb-6">
+            Hire experienced drivers for your personal or commercial vehicles. Professional, punctual, and trustworthy service.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-orange-400 mr-2"></i> Verified drivers</li>
+            <li><i class="fas fa-check text-orange-400 mr-2"></i> Flexible hours</li>
+            <li><i class="fas fa-check text-orange-400 mr-2"></i> Multilingual</li>
+            <li><i class="fas fa-check text-orange-400 mr-2"></i> Background checked</li>
+          </ul>
+          <a href="/booking?service=driver" class="inline-flex items-center text-orange-400 font-medium hover:text-orange-300">
+            Hire a Driver <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Pickup/Van Booking -->
+        <div class="glass-panel-lg rounded-2xl p-6 hover:transform hover:-translate-y-2 transition-all duration-300">
+          <div class="w-16 h-16 bg-gradient-to-br from-lime-600 to-green-600 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fas fa-truck-pickup text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Pickup Van Booking</h3>
+          <p class="text-gray-400 mb-6">
+            Space-efficient van and pickup bookings for families and small groups. Comfort meets practicality.
+          </p>
+          <ul class="space-y-3 mb-6 text-gray-300">
+            <li><i class="fas fa-check text-lime-400 mr-2"></i> Spacious interior</li>
+            <li><i class="fas fa-check text-lime-400 mr-2"></i> Ample luggage space</li>
+            <li><i class="fas fa-check text-lime-400 mr-2"></i> AC available</li>
+            <li><i class="fas fa-check text-lime-400 mr-2"></i> Affordable pricing</li>
+          </ul>
+          <a href="/booking" class="inline-flex items-center text-lime-400 font-medium hover:text-lime-300">
+            Book Pickup Van <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="section-padding bg-black/20">
+    <div class="container-custom mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-4xl font-bold mb-6">Why Choose <span class="gradient-text">Konan Travels?</span></h2>
+          <p class="text-gray-400 mb-8 text-lg">
+            We bring years of experience and dedication to every journey. Choose us for
+            unparalleled service, safety, and comfort.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-cyan-600/20 to-blue-600/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-shield-alt text-2xl text-cyan-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-2">Safety First</h3>
+                <p class="text-gray-400">All vehicles are regularly maintained and inspected for your safety.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-clock text-2xl text-purple-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-2">On-Time Service</h3>
+                <p class="text-gray-400">Punctual pickups and drop-offs, every single time.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-emerald-600/20 to-green-600/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-coins text-2xl text-emerald-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-2">Transparent Pricing</h3>
+                <p class="text-gray-400">No hidden charges, no surprise fees. What you see is what you pay.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-3xl transform rotate-3"></div>
+          <div class="relative glass-panel-lg rounded-3xl overflow-hidden h-[400px]">
+            <img src="/images/why_choose_us.png" alt="Premium Service" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6">
+              <p class="text-white font-semibold text-lg">"Konan Travels made our family trip seamless and comfortable. Highly recommended!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black pt-16 pb-8 border-t border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h2 class="text-2xl font-bold mb-4 gradient-text">KONAN <span class="text-white">TRAVELS</span></h2>
+          <p class="text-gray-400 text-sm mb-4">
+            Premium travel and vehicle rental services for all your transportation needs.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/" class="hover:text-cyan-400 transition-colors">Home</a></li>
+            <li><a href="/services" class="hover:text-cyan-400 transition-colors">Services</a></li>
+            <li><a href="/fleet" class="hover:text-cyan-400 transition-colors">Fleet</a></li>
+            <li><a href="/booking" class="hover:text-cyan-400 transition-colors">Book Now</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Services</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/booking?service=local" class="hover:text-cyan-400 transition-colors">Local Car Rental</a></li>
+            <li><a href="/booking?service=outstation" class="hover:text-cyan-400 transition-colors">Outstation Trips</a></li>
+            <li><a href="/booking?service=airport" class="hover:text-cyan-400 transition-colors">Airport Transfer</a></li>
+            <li><a href="/booking?service=house_shifting" class="hover:text-cyan-400 transition-colors">House Shifting</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt text-cyan-500 mr-2 mt-1"></i>
+              <span>123, Transport Nagar,<br>New Delhi, India</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone text-cyan-500 mr-2"></i>
+              <span>+91 98765 43210</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope text-cyan-500 mr-2"></i>
+              <span>info@konantravels.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 Konan Travels. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursorDot = document.createElement('div');
+    cursorDot.className = 'fixed w-3 h-3 bg-cyan-400 rounded-full pointer-events-none z-[9999] transition-opacity duration-200';
+    document.body.appendChild(cursorDot);
+
+    document.addEventListener('mousemove', (e) => {
+      cursorDot.style.left = e.clientX + 'px';
+      cursorDot.style.top = e.clientY + 'px';
+    });
+
+    // Service type from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const service = urlParams.get('service');
+    if (service) {
+      setTimeout(() => {
+        document.querySelectorAll('.glass-panel-lg').forEach(card => {
+          if (card.innerText.toLowerCase().includes(service.replace('_', ' '))) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      }, 100);
+    }
+  </script>
+</body>
+</html>

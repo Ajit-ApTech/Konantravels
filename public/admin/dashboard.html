@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Konan Travels Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            neon: { cyan: '#00f3ff', purple: '#bc13fe', blue: '#0066ff' }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #00f3ff 0%, #bc13fe 50%, #00f3ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-panel-lg {
+      background: rgba(20, 20, 35, 0.4);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="flex h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 glass-panel-lg border-r border-white/5 hidden md:flex flex-col">
+    <div class="p-6 border-b border-white/5">
+      <h2 class="text-2xl font-bold gradient-text">Konan <span class="text-white">Admin</span></h2>
+      <p class="text-xs text-gray-400 mt-1">Travel Management System</p>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-2">
+      <a href="#" class="flex items-center px-4 py-3 text-white rounded-lg bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/30">
+        <i class="fas fa-dashboard w-5"></i>
+        <span class="ml-3 font-medium">Dashboard</span>
+      </a>
+      <a href="#" class="flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+        <i class="fas fa-car w-5"></i>
+        <span class="ml-3 font-medium">Manage Fleet</span>
+      </a>
+      <a href="#" class="flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+        <i class="fas fa-calendar-check w-5"></i>
+        <span class="ml-3 font-medium">Manage Bookings</span>
+      </a>
+      <a href="#" class="flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+        <i class="fas fa-envelope w-5"></i>
+        <span class="ml-3 font-medium">Inquiries</span>
+      </a>
+      <a href="#" class="flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+        <i class="fas fa-question w-5"></i>
+        <span class="ml-3 font-medium">FAQs</span>
+      </a>
+      <a href="#" class="flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+        <i class="fas fa-chart-pie w-5"></i>
+        <span class="ml-3 font-medium">Reports</span>
+      </a>
+      <a href="#" class="flex items-center px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+        <i class="fas fa-cog w-5"></i>
+        <span class="ml-3 font-medium">Settings</span>
+      </a>
+    </nav>
+
+    <div class="p-4 border-t border-white/5">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center">
+          <i class="fas fa-user text-white"></i>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-white">Admin User</p>
+          <p class="text-xs text-gray-400">admin@konantravels.com</p>
+        </div>
+      </div>
+      <button onclick="logout()" class="mt-4 w-full py-2 text-sm text-gray-400 hover:text-red-400 transition-colors">
+        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto">
+    <!-- Top Bar -->
+    <header class="h-16 glass-panel-lg border-b border-white/5 flex items-center justify-between px-6">
+      <h3 class="text-xl font-semibold">Dashboard Overview</h3>
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <i class="fas fa-bell text-gray-400 text-xl"></i>
+          <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+        </div>
+        <div class="text-sm text-gray-400">
+          <span id="current-date"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <div class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="glass-panel rounded-2xl p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-400 text-sm mb-1">Total Bookings</p>
+              <h3 class="text-3xl font-bold text-white"><span id="stat-bookings">0</span></h3>
+            </div>
+            <div class="w-12 h-12 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-xl flex items-center justify-center">
+              <i class="fas fa-calendar-check text-2xl text-white"></i>
+            </div>
+          </div>
+        </div>
+        <div class="glass-panel rounded-2xl p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-400 text-sm mb-1">Pending</p>
+              <h3 class="text-3xl font-bold text-amber-400"><span id="stat-pending">0</span></h3>
+            </div>
+            <div class="w-12 h-12 bg-gradient-to-br from-amber-600 to-orange-600 rounded-xl flex items-center justify-center">
+              <i class="fas fa-clock text-2xl text-white"></i>
+            </div>
+          </div>
+        </div>
+        <div class="glass-panel rounded-2xl p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-400 text-sm mb-1">Active Vehicles</p>
+              <h3 class="text-3xl font-bold text-emerald-400"><span id="stat-active">0</span></h3>
+            </div>
+            <div class="w-12 h-12 bg-gradient-to-br from-emerald-600 to-green-600 rounded-xl flex items-center justify-center">
+              <i class="fas fa-car text-2xl text-white"></i>
+            </div>
+          </div>
+        </div>
+        <div class="glass-panel rounded-2xl p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-400 text-sm mb-1">Total Revenue</p>
+              <h3 class="text-3xl font-bold text-purple-400">₹<span id="stat-revenue">0</span></h3>
+            </div>
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
+              <i class="fas fa-wallet text-2xl text-white"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Bookings -->
+      <div class="glass-panel-lg rounded-2xl p-6 mb-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-semibold">Recent Bookings</h3>
+          <a href="/admin/bookings" class="text-cyan-400 hover:text-cyan-300 text-sm">View All</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-white/10">
+                <th class="text-left py-3 px-4 text-sm text-gray-400">Booking #</th>
+                <th class="text-left py-3 px-4 text-sm text-gray-400">Customer</th>
+                <th class="text-left py-3 px-4 text-sm text-gray-400">Service</th>
+                <th class="text-left py-3 px-4 text-sm text-gray-400">Amount</th>
+                <th class="text-left py-3 px-4 text-sm text-gray-400">Status</th>
+                <th class="text-left py-3 px-4 text-sm text-gray-400">Action</th>
+              </tr>
+            </thead>
+            <tbody id="recent-bookings">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <button onclick="window.location.href='/admin/fleet'" class="glass-panel rounded-xl p-6 text-center hover:bg-white/5 transition-all">
+          <i class="fas fa-car text-3xl text-cyan-400 mb-3"></i>
+          <h4 class="text-white font-medium">Manage Fleet</h4>
+        </button>
+        <button onclick="window.location.href='/admin/bookings'" class="glass-panel rounded-xl p-6 text-center hover:bg-white/5 transition-all">
+          <i class="fas fa-calendar-check text-3xl text-purple-400 mb-3"></i>
+          <h4 class="text-white font-medium">View Bookings</h4>
+        </button>
+        <button onclick="window.location.href='/admin/contacts'" class="glass-panel rounded-xl p-6 text-center hover:bg-white/5 transition-all">
+          <i class="fas fa-envelope text-3xl text-emerald-400 mb-3"></i>
+          <h4 class="text-white font-medium">Customer Messages</h4>
+        </button>
+        <button onclick="window.location.href='/admin/faqs'" class="glass-panel rounded-xl p-6 text-center hover:bg-white/5 transition-all">
+          <i class="fas fa-question text-3xl text-amber-400 mb-3"></i>
+          <h4 class="text-white font-medium">Manage FAQs</h4>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Get current date
+    document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Mock data for dashboard
+    const mockBookings = [
+      { id: 'KT20240525ABC123', customer: 'Rajesh Kumar', service: 'Outstation Trip', amount: 8500, status: 'confirmed' },
+      { id: 'KT20240525XYZ456', customer: 'Priya Sharma', service: 'Airport Transfer', amount: 2500, status: 'completed' },
+      { id: 'KT20240525DEF789', customer: 'Anjali Patel', service: 'Local Car', amount: 450, status: 'pending' },
+      { id: 'KT20240524GHI012', customer: 'Vikram Singh', service: 'House Shifting', amount: 12000, status: 'in-progress' },
+    ];
+
+    // Render recent bookings
+    const tbody = document.getElementById('recent-bookings');
+    mockBookings.forEach(booking => {
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-white/5 hover:bg-white/5';
+      tr.innerHTML = `
+        <td class="py-4 px-4 text-sm text-gray-400">${booking.id}</td>
+        <td class="py-4 px-4 text-sm text-white">${booking.customer}</td>
+        <td class="py-4 px-4 text-sm text-gray-400">${booking.service}</td>
+        <td class="py-4 px-4 text-sm text-cyan-400">₹${booking.amount}</td>
+        <td class="py-4 px-4">
+          <span class="px-3 py-1 rounded-full text-xs font-medium ${
+            booking.status === 'confirmed' ? 'bg-green-500/20 text-green-400' :
+            booking.status === 'completed' ? 'bg-emerald-500/20 text-emerald-400' :
+            booking.status === 'pending' ? 'bg-amber-500/20 text-amber-400' :
+            'bg-blue-500/20 text-blue-400'
+          }">${booking.status}</span>
+        </td>
+        <td class="py-4 px-4">
+          <button class="text-cyan-400 hover:text-cyan-300"><i class="fas fa-eye"></i></button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Update stats
+    document.getElementById('stat-bookings').textContent = mockBookings.length;
+    document.getElementById('stat-pending').textContent = mockBookings.filter(b => b.status === 'pending').length;
+    document.getElementById('stat-active').textContent = '45';
+    document.getElementById('stat-revenue').textContent = '234500';
+
+    // Logout
+    function logout() {
+      localStorage.removeItem('adminToken');
+      window.location.href = '/admin/login';
+    }
+  </script>
+</body>
+</html>

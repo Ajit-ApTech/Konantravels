@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konan Travels | Premium Travel & Vehicle Booking</title>
+  <meta name="description" content="Book cars, vans, and transport services with ease - Konan Travels">
+  <meta name="keywords" content="car rental, cab booking, airport transfer, outstation taxi, loading vehicle, house shifting">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#1a2935',
+              100: '#162129',
+              200: '#0f1821',
+              300: '#0b1218',
+              400: '#080c10',
+              500: '#040808',
+              600: '#000000',
+              700: '#0a1525',
+              800: '#02040a',
+              900: '#000000',
+            },
+            neon: {
+              cyan: '#00f3ff',
+              purple: '#bc13fe',
+              blue: '#0066ff',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.8s ease-out forwards',
+            'slide-down': 'slideDown 0.8s ease-out forwards',
+            'pulse-glow': 'pulseGlow 2s ease-in-out infinite alternate',
+            'float': 'float 3s ease-in-out infinite',
+            'glow': 'glow 3s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideDown: {
+              '0%': { opacity: '0', transform: 'translateY(-20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            pulseGlow: {
+              '0%': { boxShadow: '0 0 5px #00f3ff, 0 0 10px #00f3ff' },
+              '100%': { boxShadow: '0 0 15px #00f3ff, 0 0 30px #00f3ff, 0 0 40px #00f3ff' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            glow: {
+              '0%': { textShadow: '0 0 5px #bc13fe' },
+              '100%': { textShadow: '0 0 20px #bc13fe, 0 0 30px #bc13fe' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #fff;
+      cursor: default;
+    }
+
+    /* Custom Cursor */
+    .custom-cursor {
+      cursor: none;
+    }
+    .custom-cursor * {
+      cursor: none;
+    }
+    .cursor-dot,
+    .cursor-outline {
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+    }
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background: #00f3ff;
+      opacity: 0.8;
+    }
+    .cursor-outline {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #00f3ff;
+      opacity: 0.4;
+      transition: width 0.3s, height 0.3s;
+    }
+    .cursor-dot.visible,
+    .cursor-outline.visible {
+      opacity: 1;
+    }
+
+    /* Particle Canvas */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Glassmorphism */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-panel-lg {
+      background: rgba(20, 20, 35, 0.4);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Gradient Text */
+    .gradient-text {
+      background: linear-gradient(135deg, #00f3ff 0%, #bc13fe 50%, #00f3ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+
+    /* Gradient Border */
+    .gradient-border {
+      position: relative;
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 1rem;
+      padding: 2px;
+      background: linear-gradient(45deg, #00f3ff, #bc13fe, #0066ff);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: gradient-rotate 3s linear infinite;
+    }
+    @keyframes gradient-rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Glass Button */
+    .glass-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    .glass-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* Map Animation */
+    .map-path {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: dash 20s linear forwards;
+    }
+    @keyframes dash {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Section Spacing */
+    .section-padding {
+      padding: 80px 20px;
+    }
+    .container-custom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Smooth Transitions */
+    .transition-all {
+      transition: all 0.3s ease;
+    }
+    .transition-transform {
+      transition: transform 0.3s ease;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #00f3ff, #bc13fe);
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #bc13fe, #00f3ff);
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top: 3px solid #00f3ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Card Hover Effect */
+    .vehicle-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+    }
+    .vehicle-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 243, 255, 0.15);
+    }
+    .vehicle-card:hover .card-image {
+      transform: scale(1.1);
+    }
+
+    /* Navigation */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00f3ff, #bc13fe);
+      transition: width 0.3s ease;
+      transform: translateX(-50%);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 60%;
+    }
+  </style>
+</head>
+<body class="custom-cursor">
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-outline" id="cursor-outline"></div>
+
+  <!-- Particle Background -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 top-0 glass-panel-lg border-b border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <a href="/" class="text-2xl font-bold gradient-text tracking-wider">
+          KONAN <span class="text-white">TRAVELS</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="nav-link active text-sm font-medium">Home</a>
+          <a href="/services" class="nav-link text-sm font-medium">Services</a>
+          <a href="/fleet" class="nav-link text-sm font-medium">Fleet</a>
+          <a href="/booking" class="nav-link text-sm font-medium">Book Now</a>
+          <a href="/about" class="nav-link text-sm font-medium">About</a>
+          <a href="/contact" class="nav-link text-sm font-medium">Contact</a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="tel:+919876543210" class="hidden md:flex items-center text-sm text-white hover:text-cyan-400 transition-colors">
+            <i class="fas fa-phone mr-2"></i> +91 98765 43210
+          </a>
+          <button class="md:hidden text-white">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a]"></div>
+      <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-[#00f3ff]/10 to-transparent"></div>
+      <div class="absolute bottom-0 right-0 w-full h-1/2 bg-gradient-to-t from-[#bc13fe]/10 to-transparent"></div>
+    </div>
+
+    <div class="container-custom mx-auto relative z-10 px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Hero Content -->
+        <div class="space-y-8 animate-fade-in" style="animation-delay: 0.2s;">
+          <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-panel text-sm">
+            <span class="relative flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+            </span>
+            <span class="text-cyan-400">Premium Travel Services</span>
+          </div>
+
+          <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+            Book Cars, Vans,<br>
+            <span class="gradient-text">And Transport</span><br>
+            Services With Ease
+          </h1>
+
+          <p class="text-lg md:text-xl text-gray-400 max-w-xl">
+            Experience premium travel and vehicle rental services. From local rides to outstation trips, airport transfers, and house shifting - we've got you covered with safety and comfort.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <a href="/booking" class="px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl font-semibold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 inline-flex items-center gap-2">
+              <i class="fas fa-calendar-check"></i>
+              Book Now
+            </a>
+            <a href="/fleet" class="px-8 py-4 glass-btn glass-panel text-white rounded-xl font-semibold hover:bg-white/10 transition-all inline-flex items-center gap-2">
+              <i class="fas fa-car-side"></i>
+              View Fleet
+            </a>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
+            <div>
+              <div class="text-3xl font-bold text-white"><span class="counter" data-target="500">0</span>+</div>
+              <div class="text-sm text-gray-400">Happy Customers</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-white"><span class="counter" data-target="15">0</span>+</div>
+              <div class="text-sm text-gray-400">Years Experience</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-white"><span class="counter" data-target="98">0</span>%</div>
+              <div class="text-sm text-gray-400">Satisfaction</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Booking Bar -->
+        <div class="animate-slide-up hidden lg:block">
+          <div class="glass-panel-lg rounded-2xl p-6 shadow-2xl shadow-purple-900/20 border border-white/10">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-xl font-semibold text-white">
+                <i class="fas fa-rocket text-cyan-400 mr-2"></i> Quick Booking
+              </h3>
+              <div class="text-xs text-gray-400">Get instant price estimate</div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="text-xs text-gray-400 uppercase font-semibold tracking-wider">Pickup</label>
+                  <div class="relative">
+                    <i class="fas fa-map-marker-alt absolute left-3 top-3 text-gray-500"></i>
+                    <input type="text" id="pickup-location" placeholder="Enter pickup location" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder-gray-600">
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <label class="text-xs text-gray-400 uppercase font-semibold tracking-wider">Drop</label>
+                  <div class="relative">
+                    <i class="fas fa-map-marker-alt absolute left-3 top-3 text-gray-500 rotate-180"></i>
+                    <input type="text" id="drop-location" placeholder="Enter drop location" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder-gray-600">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="text-xs text-gray-400 uppercase font-semibold tracking-wider">Date</label>
+                  <div class="relative">
+                    <i class="fas fa-calendar absolute left-3 top-3 text-gray-500"></i>
+                    <input type="date" id="booking-date" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <label class="text-xs text-gray-400 uppercase font-semibold tracking-wider">Time</label>
+                  <div class="relative">
+                    <i class="fas fa-clock absolute left-3 top-3 text-gray-500"></i>
+                    <input type="time" id="booking-time" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="text-xs text-gray-400 uppercase font-semibold tracking-wider">Vehicle</label>
+                  <select id="vehicle-type" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                    <option value="">Select Vehicle</option>
+                    <option value="hatchback">Hatchback</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                    <option value="tempo_traveller">Tempo Traveller</option>
+                    <option value="pickup_van">Pickup Van</option>
+                  </select>
+                </div>
+                <div class="space-y-2">
+                  <label class="text-xs text-gray-400 uppercase font-semibold tracking-wider">Trip Type</label>
+                  <select id="trip-type" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                    <option value="one-way">One Way</option>
+                    <option value="round-trip">Round Trip</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="pt-4">
+                <button onclick="estimatePrice()" class="w-full py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl font-semibold text-white shadow-lg hover:shadow-cyan-500/30 transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+                  <i class="fas fa-search"></i>
+                  Search & Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
+        <div class="w-1 h-2 bg-white/50 rounded-full animate-pulse"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="section-padding relative">
+    <div class="container-custom mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">
+          Our <span class="gradient-text">Premium Services</span>
+        </h2>
+        <p class="text-gray-400">Comprehensive travel and transportation solutions tailored to your needs</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Service Cards -->
+        <a href="/booking?service=local" class="glass-panel-lg rounded-2xl p-6 hover:bg-white/5 transition-all group cursor-pointer">
+          <div class="w-14 h-14 bg-gradient-to-br from-cyan-600/20 to-blue-600/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i class="fas fa-car text-2xl text-cyan-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-cyan-400 transition-colors">Local Car Rental</h3>
+          <p class="text-gray-400 text-sm">Affordable local rides with professional drivers</p>
+        </a>
+
+        <a href="/booking?service=outstation" class="glass-panel-lg rounded-2xl p-6 hover:bg-white/5 transition-all group cursor-pointer">
+          <div class="w-14 h-14 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i class="fas fa-road text-2xl text-purple-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-purple-400 transition-colors">Outstation Trips</h3>
+          <p class="text-gray-400 text-sm">Comfortable inter-city travel with chauffeur service</p>
+        </a>
+
+        <a href="/booking?service=airport" class="glass-panel-lg rounded-2xl p-6 hover:bg-white/5 transition-all group cursor-pointer">
+          <div class="w-14 h-14 bg-gradient-to-br from-amber-600/20 to-orange-600/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i class="fas fa-plane text-2xl text-amber-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-amber-400 transition-colors">Airport Transfer</h3>
+          <p class="text-gray-400 text-sm">Punctual airport pickups and drop-offs</p>
+        </a>
+
+        <a href="/booking?service=loading" class="glass-panel-lg rounded-2xl p-6 hover:bg-white/5 transition-all group cursor-pointer">
+          <div class="w-14 h-14 bg-gradient-to-br from-emerald-600/20 to-green-600/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i class="fas fa-boxes text-2xl text-emerald-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-emerald-400 transition-colors">Loading/Unloading</h3>
+          <p class="text-gray-400 text-sm">Efficient goods transport with loading assistance</p>
+        </a>
+
+        <a href="/booking?service=house_shifting" class="glass-panel-lg rounded-2xl p-6 hover:bg-white/5 transition-all group cursor-pointer">
+          <div class="w-14 h-14 bg-gradient-to-br from-red-600/20 to-pink-600/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i class="fas fa-home text-2xl text-red-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-red-400 transition-colors">House Shifting</h3>
+          <p class="text-gray-400 text-sm">Complete home shifting with safe transport</p>
+        </a>
+
+        <a href="/booking?service=goods" class="glass-panel-lg rounded-2xl p-6 hover:bg-white/5 transition-all group cursor-pointer">
+          <div class="w-14 h-14 bg-gradient-to-br from-teal-600/20 to-cyan-600/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i class="fas fa-truck text-2xl text-teal-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-teal-400 transition-colors">Goods Transport</h3>
+          <p class="text-gray-400 text-sm">Reliable cargo movement for businesses</p>
+        </a>
+
+        <a href="/booking?service=tempo" class="glass-panel-lg rounded-2xl p-6 hover:bg-white/5 transition-all group cursor-pointer">
+          <div class="w-14 h-14 bg-gradient-to-br from-indigo-600/20 to-blue-600/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i class="fas fa-bus text-2xl text-indigo-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-indigo-400 transition-colors">Tempo Traveller</h3>
+          <p class="text-gray-400 text-sm">Group travel with comfortable seating</p>
+        </a>
+
+        <a href="/booking?service=driver" class="glass-panel-lg rounded-2xl p-6 hover:bg-white/5 transition-all group cursor-pointer">
+          <div class="w-14 h-14 bg-gradient-to-br from-orange-600/20 to-yellow-600/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i class="fas fa-user-tie text-2xl text-orange-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-orange-400 transition-colors">Driver On Demand</h3>
+          <p class="text-gray-400 text-sm">Experienced drivers available anytime</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="section-padding bg-black/20">
+    <div class="container-custom mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-slide-up">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6">
+            Why Choose <span class="gradient-text">Konan Travels?</span>
+          </h2>
+          <p class="text-gray-400 mb-8 text-lg">
+            We bring years of experience and dedication to every journey. Choose us for
+            unparalleled service, safety, and comfort.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-cyan-600/20 to-blue-600/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-shield-alt text-2xl text-cyan-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-2">Safety First</h3>
+                <p class="text-gray-400">All vehicles are regularly maintained and inspected for your safety.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-clock text-2xl text-purple-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-2">On-Time Service</h3>
+                <p class="text-gray-400">Punctual pickups and drop-offs, every single time.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-emerald-600/20 to-green-600/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-coins text-2xl text-emerald-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-2">Transparent Pricing</h3>
+                <p class="text-gray-400">No hidden charges, no surprise fees. What you see is what you pay.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-600/20 to-orange-600/20 rounded-xl flex items-center justify-center">
+                <i class="fas fa-headset text-2xl text-amber-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-2">24/7 Support</h3>
+                <p class="text-gray-400">Our dedicated team is always available to assist you.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <a href="/about" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
+              Learn more about us <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="relative animate-slide-down">
+          <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-3xl transform rotate-3"></div>
+          <div class="relative glass-panel-lg rounded-3xl overflow-hidden h-[500px]">
+            <img src="/images/why_choose_us.png" alt="Premium Service" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6">
+              <p class="text-white font-semibold text-lg">"Konan Travels made our family trip seamless and comfortable. Highly recommended!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Vehicles -->
+  <section class="section-padding relative">
+    <div class="container-custom mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-10">
+        <div>
+          <h2 class="text-4xl font-bold mb-2">Our <span class="gradient-text">Fleet</span></h2>
+          <p class="text-gray-400">Premium vehicles for every travel need</p>
+        </div>
+        <a href="/fleet" class="mt-4 md:mt-0 inline-flex items-center text-white hover:text-cyan-400 transition-colors">
+          View All Vehicles <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Vehicle Card 1 -->
+        <div class="vehicle-card glass-panel-lg rounded-2xl overflow-hidden group cursor-pointer">
+          <div class="relative overflow-hidden">
+            <img src="/images/premium_sedan.png" alt="Sedan" class="card-image w-full h-48 object-cover transition-transform group-hover:scale-110">
+            <div class="absolute top-3 right-3">
+              <span class="bg-cyan-600 text-white text-xs px-3 py-1 rounded-full font-semibold">Available</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="text-xl font-semibold text-white mb-2">Premium Sedan</h3>
+            <div class="flex items-center text-gray-400 text-sm mb-3">
+              <i class="fas fa-user mr-2 text-cyan-500"></i> 4
+              <i class="fas fa-suitcase ml-3 mr-2 text-cyan-500"></i> 3
+              <i class="fas fa-fan ml-3 mr-2 text-cyan-500"></i> AC
+            </div>
+            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+              <div class="text-lg font-bold text-white">₹15/km</div>
+              <button onclick="showBooking('sedan')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium transition-colors">
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicle Card 2 -->
+        <div class="vehicle-card glass-panel-lg rounded-2xl overflow-hidden group cursor-pointer">
+          <div class="relative overflow-hidden">
+            <img src="/images/luxury_suv.png" alt="SUV" class="card-image w-full h-48 object-cover transition-transform group-hover:scale-110">
+            <div class="absolute top-3 right-3">
+              <span class="bg-cyan-600 text-white text-xs px-3 py-1 rounded-full font-semibold">Available</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="text-xl font-semibold text-white mb-2">Luxury SUV</h3>
+            <div class="flex items-center text-gray-400 text-sm mb-3">
+              <i class="fas fa-user mr-2 text-cyan-500"></i> 7
+              <i class="fas fa-suitcase ml-3 mr-2 text-cyan-500"></i> 5
+              <i class="fas fa-fan ml-3 mr-2 text-cyan-500"></i> AC
+            </div>
+            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+              <div class="text-lg font-bold text-white">₹22/km</div>
+              <button onclick="showBooking('suv')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium transition-colors">
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicle Card 3 -->
+        <div class="vehicle-card glass-panel-lg rounded-2xl overflow-hidden group cursor-pointer">
+          <div class="relative overflow-hidden">
+            <img src="/images/tempo_traveller.png" alt="Tempo Traveller" class="card-image w-full h-48 object-cover transition-transform group-hover:scale-110">
+            <div class="absolute top-3 right-3">
+              <span class="bg-cyan-600 text-white text-xs px-3 py-1 rounded-full font-semibold">Available</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="text-xl font-semibold text-white mb-2">Tempo Traveller</h3>
+            <div class="flex items-center text-gray-400 text-sm mb-3">
+              <i class="fas fa-user mr-2 text-cyan-500"></i> 12
+              <i class="fas fa-suitcase ml-3 mr-2 text-cyan-500"></i> 8
+              <i class="fas fa-fan ml-3 mr-2 text-cyan-500"></i> AC
+            </div>
+            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+              <div class="text-lg font-bold text-white">₹25/km</div>
+              <button onclick="showBooking('tempo')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium transition-colors">
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicle Card 4 -->
+        <div class="vehicle-card glass-panel-lg rounded-2xl overflow-hidden group cursor-pointer">
+          <div class="relative overflow-hidden">
+            <img src="/images/pickup_van.png" alt="Van" class="card-image w-full h-48 object-cover transition-transform group-hover:scale-110">
+            <div class="absolute top-3 right-3">
+              <span class="bg-cyan-600 text-white text-xs px-3 py-1 rounded-full font-semibold">Available</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="text-xl font-semibold text-white mb-2">Pickup Van</h3>
+            <div class="flex items-center text-gray-400 text-sm mb-3">
+              <i class="fas fa-user mr-2 text-cyan-500"></i> 4
+              <i class="fas fa-boxes ml-3 mr-2 text-cyan-500"></i> 10
+              <i class="fas fa-fan ml-3 mr-2 text-cyan-500"></i> AC
+            </div>
+            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+              <div class="text-lg font-bold text-white">₹20/km</div>
+              <button onclick="showBooking('van')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium transition-colors">
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section-padding bg-black/20">
+    <div class="container-custom mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-4xl font-bold mb-4">How It <span class="gradient-text">Works</span></h2>
+        <p class="text-gray-400">Simple, fast, and convenient booking process</p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-8 relative">
+        <!-- Connector Line -->
+        <div class="hidden md:block absolute top-10 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-600/30 via-purple-600/30 to-cyan-600/30"></div>
+
+        <div class="relative text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/20">
+            <span class="text-2xl font-bold text-white">1</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Choose Service</h3>
+          <p class="text-gray-400 text-sm">Select from local, outstation, or cargo services</p>
+        </div>
+
+        <div class="relative text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg shadow-purple-500/20">
+            <span class="text-2xl font-bold text-white">2</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Select Vehicle</h3>
+          <p class="text-gray-400 text-sm">Choose the perfect vehicle for your needs</p>
+        </div>
+
+        <div class="relative text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-emerald-600 to-green-600 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/20">
+            <span class="text-2xl font-bold text-white">3</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Book & Pay</h3>
+          <p class="text-gray-400 text-sm">Confirm your booking with secure payment</p>
+        </div>
+
+        <div class="relative text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-amber-600 to-orange-600 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg shadow-amber-500/20">
+            <span class="text-2xl font-bold text-white">4</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Travel</h3>
+          <p class="text-gray-400 text-sm">Enjoy your journey with our premium service</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section-padding relative">
+    <div class="container-custom mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-4xl font-bold mb-4">What Our <span class="gradient-text">Customers Say</span></h2>
+        <p class="text-gray-400">Trusted by thousands of happy travelers</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-panel-lg rounded-2xl p-6">
+          <div class="flex items-center mb-4">
+            <div class="text-amber-400 text-xl">★★★★★</div>
+            <span class="text-gray-500 ml-2 text-sm">5.0</span>
+          </div>
+          <p class="text-gray-300 mb-6">"The best cab service in town! Very punctual, drivers are well-dressed and courteous. Will definitely use again."</p>
+          <div class="flex items-center">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <h4 class="text-white font-semibold">Priya Sharma</h4>
+              <p class="text-gray-500 text-xs">Business Traveler</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel-lg rounded-2xl p-6">
+          <div class="flex items-center mb-4">
+            <div class="text-amber-400 text-xl">★★★★★</div>
+            <span class="text-gray-500 ml-2 text-sm">5.0</span>
+          </div>
+          <p class="text-gray-300 mb-6">"Hired a tempo Traveller for our family trip. Great vehicle, very comfortable. Driver was punctual and helpful."</p>
+          <div class="flex items-center">
+            <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <h4 class="text-white font-semibold">Rajesh Kumar</h4>
+              <p class="text-gray-500 text-xs">Family Travel</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel-lg rounded-2xl p-6">
+          <div class="flex items-center mb-4">
+            <div class="text-amber-400 text-xl">★★★★★</div>
+            <span class="text-gray-500 ml-2 text-sm">5.0</span>
+          </div>
+          <p class="text-gray-300 mb-6">"Used their goods transport service for office relocation. Professional handling of all items, arrived on time."</p>
+          <div class="flex items-center">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <h4 class="text-white font-semibold">Anjali Patel</h4>
+              <p class="text-gray-500 text-xs">Corporate Client</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Areas Map Section -->
+  <section class="section-padding bg-gradient-to-b from-black/40 to-black">
+    <div class="container-custom mx-auto">
+      <div class="flex flex-col lg:flex-row gap-8 items-center">
+        <div class="flex-1">
+          <h2 class="text-4xl font-bold mb-4">Serving Across <span class="gradient-text">Multiple Cities</span></h2>
+          <p class="text-gray-400 mb-8 text-lg">
+            We provide premium transport services across major cities and towns. No matter where you need to go, we're there to serve you.
+          </p>
+          <div class="space-y-4">
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt text-cyan-400 mr-3"></i>
+              <span class="text-white">New Delhi</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt text-cyan-400 mr-3"></i>
+              <span class="text-white">Gurgaon</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt text-cyan-400 mr-3"></i>
+              <span class="text-white">Noida</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt text-cyan-400 mr-3"></i>
+              <span class="text-white">Faridabad</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt text-cyan-400 mr-3"></i>
+              <span class="text-white">Greater Noida</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1 w-full">
+          <div class="glass-panel-lg rounded-2xl overflow-hidden h-[350px] relative group">
+            <img src="/images/service_area.png" alt="Service Area" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-24 h-24 rounded-full border-4 border-cyan-500/50 flex items-center justify-center animate-pulse">
+                <i class="fas fa-location-arrow text-3xl text-cyan-400"></i>
+              </div>
+            </div>
+            <div class="absolute bottom-6 left-6 right-6 text-center">
+              <p class="text-white font-semibold text-lg">We're coming to your area soon!</p>
+              <p class="text-gray-300 text-sm">Currently serving Delhi NCR</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Preview -->
+  <section class="section-padding">
+    <div class="container-custom mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-4xl font-bold mb-4">Frequently Asked <span class="gradient-text">Questions</span></h2>
+        <p class="text-gray-400">Quick answers to common questions</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="glass-panel-lg rounded-2xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-3">How do I book a vehicle?</h3>
+          <p class="text-gray-400 text-sm">You can book online through our website, call us directly, or use our mobile app. Simply select your vehicle, date, and time.</p>
+        </div>
+        <div class="glass-panel-lg rounded-2xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-3">What payment methods do you accept?</h3>
+          <p class="text-gray-400 text-sm">We accept cash, UPI, credit/debit cards, and digital wallets. Advance booking also allows for online payment options.</p>
+        </div>
+        <div class="glass-panel-lg rounded-2xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-3">Are drivers included in the price?</h3>
+          <p class="text-gray-400 text-sm">Yes, all our vehicles come with professional, experienced drivers unless you opt for a self-drive option.</p>
+        </div>
+        <div class="glass-panel-lg rounded-2xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-3">Can I modify my booking?</h3>
+          <p class="text-gray-400 text-sm">Yes, you can modify your booking up to 2 hours before the scheduled pickup time subject to availability.</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="/faq" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
+          View All FAQs <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Strip -->
+  <section class="py-8 bg-gradient-to-r from-[#0a1525] to-[#1a1a2e] border-t border-white/10">
+    <div class="container-custom mx-auto flex flex-col md:flex-row items-center justify-between">
+      <div class="mb-4 md:mb-0">
+        <h3 class="text-xl font-semibold text-white">Need Help?</h3>
+        <p class="text-gray-400 text-sm">We're here to assist you 24/7</p>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="tel:+919876543210" class="flex items-center px-6 py-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all">
+          <i class="fas fa-phone text-cyan-400 text-xl mr-3"></i>
+          <div class="text-left">
+            <div class="text-xs text-gray-400">Call Now</div>
+            <div class="text-white font-semibold">+91 98765 43210</div>
+          </div>
+        </a>
+        <a href="https://wa.me/919876543210" target="_blank" class="flex items-center px-6 py-3 bg-green-600/20 rounded-xl hover:bg-green-600/30 transition-all">
+          <i class="fab fa-whatsapp text-green-400 text-xl mr-3"></i>
+          <div class="text-left">
+            <div class="text-xs text-gray-400">Chat on WhatsApp</div>
+            <div class="text-white font-semibold">+91 98765 43210</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black pt-16 pb-8 border-t border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h2 class="text-2xl font-bold mb-4 gradient-text">KONAN <span class="text-white">TRAVELS</span></h2>
+          <p class="text-gray-400 text-sm mb-4">
+            Premium travel and vehicle rental services for all your transportation needs.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/" class="hover:text-cyan-400 transition-colors">Home</a></li>
+            <li><a href="/services" class="hover:text-cyan-400 transition-colors">Services</a></li>
+            <li><a href="/fleet" class="hover:text-cyan-400 transition-colors">Fleet</a></li>
+            <li><a href="/booking" class="hover:text-cyan-400 transition-colors">Book Now</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Services</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/booking?service=local" class="hover:text-cyan-400 transition-colors">Local Car Rental</a></li>
+            <li><a href="/booking?service=outstation" class="hover:text-cyan-400 transition-colors">Outstation Trips</a></li>
+            <li><a href="/booking?service=airport" class="hover:text-cyan-400 transition-colors">Airport Transfer</a></li>
+            <li><a href="/booking?service=house_shifting" class="hover:text-cyan-400 transition-colors">House Shifting</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt text-cyan-500 mr-2 mt-1"></i>
+              <span>123, Transport Nagar,<br>New Delhi, India</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone text-cyan-500 mr-2"></i>
+              <span>+91 98765 43210</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope text-cyan-500 mr-2"></i>
+              <span>info@konantravels.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 Konan Travels. All rights reserved. | Privacy Policy | Terms of Service</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div id="booking-modal" class="fixed inset-0 z-[60] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel-lg rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b border-white/10 flex justify-between items-center">
+        <h3 class="text-xl font-semibold text-white">Book Your Ride</h3>
+        <button onclick="closeBooking()" class="text-gray-400 hover:text-white transition-colors">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      <div class="p-6">
+        <form id="booking-form">
+          <div class="space-y-4">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Full Name</label>
+                <input type="text" id="customerName" required class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Phone Number</label>
+                <input type="tel" id="customerPhone" required class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Email</label>
+              <input type="email" id="customerEmail" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+            </div>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Pickup Location</label>
+                <input type="text" id="pickupLocation" required class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Drop Location</label>
+                <input type="text" id="dropLocation" required class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Date</label>
+                <input type="date" id="pickupDate" required class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Time</label>
+                <input type="time" id="pickupTime" required class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Trip Type</label>
+                <select id="tripType" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+                  <option value="one-way">One Way</option>
+                  <option value="round-trip">Round Trip</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Message/Notes</label>
+              <textarea id="specialNotes" rows="3" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none"></textarea>
+            </div>
+            <div class="pt-4">
+              <button type="submit" class="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg font-semibold text-white hover:shadow-lg hover:shadow-cyan-500/30 transition-all">
+                Submit Booking Request
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-4 right-4 z-[70] hidden">
+    <div class="bg-green-600 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3">
+      <i class="fas fa-check-circle text-xl"></i>
+      <div>
+        <div class="font-semibold">Success!</div>
+        <div id="toast-message" class="text-sm">Your booking has been submitted</div>
+      </div>
+      <button onclick="closeToast()" class="ml-4 text-white/80 hover:text-white">&times;</button>
+    </div>
+  </div>
+
+  <script>
+    // Custom Cursor
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorOutline = document.getElementById('cursor-outline');
+
+    window.addEventListener('mousemove', (e) => {
+      cursorDot.style.left = e.clientX + 'px';
+      cursorDot.style.top = e.clientY + 'px';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      const x = e.clientX * 0.1;
+      const y = e.clientY * 0.1;
+      setTimeout(() => {
+        cursorOutline.style.left = e.clientX + 'px';
+        cursorOutline.style.top = e.clientY + 'px';
+      }, 50);
+    });
+
+    // Counter Animation
+    document.querySelectorAll('.counter').forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const duration = 2000;
+      const increment = target / (duration / 16);
+      let current = 0;
+
+      const update = () => {
+        current += increment;
+        if (current < target) {
+          counter.textContent = Math.floor(current);
+          requestAnimationFrame(update);
+        } else {
+          counter.textContent = target;
+        }
+      };
+      update();
+    });
+
+    // Booking Modal
+    function showBooking(vehicleType) {
+      document.getElementById('booking-modal').classList.remove('hidden');
+      document.getElementById('vehicleType').value = vehicleType;
+    }
+
+    function closeBooking() {
+      document.getElementById('booking-modal').classList.add('hidden');
+    }
+
+    // Toast Notification
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 5000);
+    }
+
+    // Close modal on outside click
+    document.getElementById('booking-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'booking-modal') {
+        closeBooking();
+      }
+    });
+
+    // Handle Booking Form
+    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        customerName: document.getElementById('customerName').value,
+        customerPhone: document.getElementById('customerPhone').value,
+        customerEmail: document.getElementById('customerEmail').value,
+        pickupLocation: document.getElementById('pickupLocation').value,
+        dropLocation: document.getElementById('dropLocation').value,
+        pickupDate: document.getElementById('pickupDate').value,
+        pickupTime: document.getElementById('pickupTime').value,
+        tripType: document.getElementById('tripType').value,
+        specialNotes: document.getElementById('specialNotes').value,
+        vehicleType: 'sedan',
+        serviceType: 'local'
+      };
+
+      try {
+        const response = await fetch('/api/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+        closeBooking();
+        showToast('Booking submitted successfully!');
+        document.getElementById('booking-form').reset();
+      } catch (error) {
+        showToast('Failed to submit booking. Please try again.');
+      }
+    });
+
+    // Particle Canvas Effect
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(0, 243, 255, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      // Draw connections between nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            ctx.strokeStyle = `rgba(0, 243, 255, ${0.1 - distance / 1000})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      particles = [];
+      initParticles();
+    });
+
+    resizeCanvas();
+    initParticles();
+    animateParticles();
+
+    // Estimated Price Calculation
+    function estimatePrice() {
+      const pickup = document.getElementById('pickup-location').value;
+      const drop = document.getElementById('drop-location').value;
+      const vehicle = document.getElementById('vehicle-type').value;
+
+      if (!pickup || !drop) {
+        showToast('Please enter pickup and drop locations');
+        return;
+      }
+
+      // Simulated price calculation
+      let basePrice = 100;
+      if (vehicle === 'sedan') basePrice = 15;
+      else if (vehicle === 'suv') basePrice = 22;
+      else if (vehicle === 'tempo_traveller') basePrice = 25;
+      else if (vehicle === 'pickup_van') basePrice = 20;
+
+      const estimated = basePrice * 10; // Simplified calculation
+      showToast(`Estimated price: ₹${estimated} for ${vehicle}`);
+    }
+  </script>
+</body>
+</html>

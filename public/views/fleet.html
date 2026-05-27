@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Fleet | Konan Travels</title>
+  <meta name="description" content="Browse our premium vehicle fleet for rental">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#1a2935',
+              100: '#162129',
+              200: '#0f1821',
+              300: '#0b1218',
+              400: '#080c10',
+              500: '#040808',
+              600: '#000000',
+              700: '#0a1525',
+              800: '#02040a',
+              900: '#000000',
+            },
+            neon: {
+              cyan: '#00f3ff',
+              purple: '#bc13fe',
+              blue: '#0066ff',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.8s ease-out forwards',
+            'slide-down': 'slideDown 0.8s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideDown: {
+              '0%': { opacity: '0', transform: 'translateY(-20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #00f3ff 0%, #bc13fe 50%, #00f3ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -5px; left: 50%;
+      width: 0; height: 2px; background: linear-gradient(90deg, #00f3ff, #bc13fe);
+      transition: width 0.3s ease; transform: translateX(-50%);
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 60%; }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f3ff, #bc13fe); border-radius: 5px; }
+
+    /* Vehicle Card */
+    .vehicle-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+    }
+    .vehicle-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 243, 255, 0.15);
+    }
+    .vehicle-card:hover .card-image {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 top-0 glass-panel-lg border-b border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <a href="/" class="text-2xl font-bold gradient-text tracking-wider">
+          KONAN <span class="text-white">TRAVELS</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="nav-link text-sm font-medium">Home</a>
+          <a href="/services" class="nav-link text-sm font-medium">Services</a>
+          <a href="/fleet" class="nav-link active text-sm font-medium">Fleet</a>
+          <a href="/booking" class="nav-link text-sm font-medium">Book Now</a>
+          <a href="/about" class="nav-link text-sm font-medium">About</a>
+          <a href="/contact" class="nav-link text-sm font-medium">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] flex items-center pt-24 pb-16">
+    <div class="container-custom mx-auto px-4 text-center">
+      <div class="inline-block px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-400 text-sm mb-6 border border-cyan-500/20">
+        <i class="fas fa-car mr-2"></i> Our Premium Fleet
+      </div>
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Choose Your Vehicle</h1>
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+        A wide range of well-maintained vehicles for all your travel needs
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="py-8">
+    <div class="container-custom mx-auto px-4">
+      <div class="glass-panel-lg rounded-2xl p-6">
+        <div class="flex flex-wrap gap-4">
+          <!-- Trip Type Filter -->
+          <div class="flex-1 min-w-[200px]">
+            <label class="block text-xs text-gray-400 mb-2 uppercase font-semibold">Trip Type</label>
+            <select id="tripTypeFilter" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              <option value="">All Trip Types</option>
+              <option value="local">Local</option>
+              <option value="outstation">Outstation</option>
+              <option value="cargo">Cargo</option>
+            </select>
+          </div>
+
+          <!-- Vehicle Type Filter -->
+          <div class="flex-1 min-w-[200px]">
+            <label class="block text-xs text-gray-400 mb-2 uppercase font-semibold">Vehicle Type</label>
+            <select id="vehicleTypeFilter" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              <option value="">All Vehicle Types</option>
+              <option value="hatchback">Hatchback</option>
+              <option value="sedan">Sedan</option>
+              <option value="suv">SUV</option>
+              <option value="tempo_traveller">Tempo Traveller</option>
+              <option value="pickup_van">Pickup Van</option>
+              <option value="mini_truck">Mini Truck</option>
+            </select>
+          </div>
+
+          <!-- Price Range Filter -->
+          <div class="flex-1 min-w-[200px]">
+            <label class="block text-xs text-gray-400 mb-2 uppercase font-semibold">Price Range</label>
+            <select id="priceFilter" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              <option value="">Any Price</option>
+              <option value="0-50">Under ₹50/km</option>
+              <option value="50-100">₹50 - ₹100/km</option>
+              <option value="100-9999">Above ₹100/km</option>
+            </select>
+          </div>
+
+          <!-- AC Filter -->
+          <div class="flex-1 min-w-[200px]">
+            <label class="block text-xs text-gray-400 mb-2 uppercase font-semibold">AC / Non-AC</label>
+            <select id="acFilter" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              <option value="">Any</option>
+              <option value="true">AC Only</option>
+              <option value="false">Non-AC</option>
+            </select>
+          </div>
+
+          <!-- Seats Filter -->
+          <div class="flex-1 min-w-[200px]">
+            <label class="block text-xs text-gray-400 mb-2 uppercase font-semibold">Seats</label>
+            <select id="seatsFilter" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              <option value="">Any Seats</option>
+              <option value="4">Up to 4</option>
+              <option value="7">Up to 7</option>
+              <option value="12">Up to 12</option>
+              <option value="12+">More than 12</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center mt-6 pt-6 border-t border-white/10">
+          <div class="text-sm text-gray-400">
+            <span id="vehicleCount">0</span> vehicles found
+          </div>
+          <div class="flex items-center space-x-2">
+            <label class="text-xs text-gray-400">Sort by:</label>
+            <select id="sortBy" class="bg-black/30 border border-white/10 rounded-lg px-3 py-1 text-sm text-white focus:border-cyan-500 outline-none">
+              <option value="basePricePerKm">Price (Low to High)</option>
+              <option value="basePricePerKm-desc">Price (High to Low)</option>
+              <option value="seatingCapacity">Most Seats</option>
+            </select>
+            <button onclick="resetFilters()" class="text-sm text-cyan-400 hover:text-cyan-300 px-2">
+              <i class="fas fa-sync-alt"></i> Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fleet Grid -->
+  <section class="py-10">
+    <div class="container-custom mx-auto px-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="fleetGrid">
+        <!-- Vehicles will be loaded here -->
+        <div class="col-span-full text-center py-12">
+          <div class="spinner mx-auto mb-4"></div>
+          <p class="text-gray-400">Loading fleet information...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-gradient-to-b from-black/40 to-black border-t border-white/5">
+    <div class="container-custom mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-6">Ready to Book?</h2>
+      <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+        Choose your preferred vehicle and book instantly. We guarantee safe, comfortable, and affordable travel.
+      </p>
+      <a href="/booking" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl font-semibold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all hover:scale-105">
+        <i class="fas fa-calendar-check mr-2"></i>
+        Book Your Ride Now
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black pt-16 pb-8 border-t border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h2 class="text-2xl font-bold mb-4 gradient-text">KONAN <span class="text-white">TRAVELS</span></h2>
+          <p class="text-gray-400 text-sm mb-4">
+            Premium travel and vehicle rental services for all your transportation needs.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/" class="hover:text-cyan-400 transition-colors">Home</a></li>
+            <li><a href="/services" class="hover:text-cyan-400 transition-colors">Services</a></li>
+            <li><a href="/fleet" class="hover:text-cyan-400 transition-colors">Fleet</a></li>
+            <li><a href="/booking" class="hover:text-cyan-400 transition-colors">Book Now</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Services</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/booking?service=local" class="hover:text-cyan-400 transition-colors">Local Car Rental</a></li>
+            <li><a href="/booking?service=outstation" class="hover:text-cyan-400 transition-colors">Outstation Trips</a></li>
+            <li><a href="/booking?service=airport" class="hover:text-cyan-400 transition-colors">Airport Transfer</a></li>
+            <li><a href="/booking?service=house_shifting" class="hover:text-cyan-400 transition-colors">House Shifting</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt text-cyan-500 mr-2 mt-1"></i>
+              <span>123, Transport Nagar,<br>New Delhi, India</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone text-cyan-500 mr-2"></i>
+              <span>+91 98765 43210</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope text-cyan-500 mr-2"></i>
+              <span>info@konantravels.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 Konan Travels. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Vehicle Data
+    const vehicles = [
+      { id: '1', name: 'Premium Sedan', vehicleType: 'sedan', category: 'local', image: '/images/premium_sedan.png', seatingCapacity: 4, luggageCapacity: 3, fuelType: 'petrol', isAC: true, basePricePerKm: 15, extraKmPrice: 10, features: ['AC', 'Music System', 'Wifi'] },
+      { id: '2', name: 'Luxury SUV', vehicleType: 'suv', category: 'outstation', image: '/images/luxury_suv.png', seatingCapacity: 7, luggageCapacity: 5, fuelType: 'diesel', isAC: true, basePricePerKm: 22, extraKmPrice: 15, features: ['AC', 'Leather Seats', 'Sunroof'] },
+      { id: '3', name: 'Tempo Traveller', vehicleType: 'tempo_traveller', category: 'cargo', image: '/images/tempo_traveller.png', seatingCapacity: 12, luggageCapacity: 8, fuelType: 'diesel', isAC: true, basePricePerKm: 25, extraKmPrice: 20, features: ['AC', 'Reclining Seats', 'AC'] },
+      { id: '4', name: 'Compact Hatchback', vehicleType: 'hatchback', category: 'local', image: '/images/compact_hatchback.png', seatingCapacity: 4, luggageCapacity: 2, fuelType: 'petrol', isAC: true, basePricePerKm: 12, extraKmPrice: 8, features: ['AC', 'Bluetooth'] },
+      { id: '5', name: 'Pickup Van', vehicleType: 'pickup_van', category: 'cargo', image: '/images/pickup_van.png', seatingCapacity: 4, luggageCapacity: 10, fuelType: 'diesel', isAC: true, basePricePerKm: 20, extraKmPrice: 12, features: ['AC', 'Cargo Space'] },
+      { id: '6', name: 'Mini Truck', vehicleType: 'mini_truck', category: 'cargo', image: '/images/mini_truck.png', seatingCapacity: 3, luggageCapacity: 20, fuelType: 'diesel', isAC: false, basePricePerKm: 18, extraKmPrice: 10, features: ['Non-AC', 'Large Capacity'] },
+      { id: '7', name: 'Executive Sedan', vehicleType: 'sedan', category: 'outstation', image: '/images/executive_sedan.png', seatingCapacity: 4, luggageCapacity: 3, fuelType: 'petrol', isAC: true, basePricePerKm: 18, extraKmPrice: 12, features: ['AC', 'wifi', 'Water Bottles'] },
+      { id: '8', name: 'Economy SUV', vehicleType: 'suv', category: 'outstation', image: '/images/economy_suv.png', seatingCapacity: 5, luggageCapacity: 4, fuelType: 'petrol', isAC: true, basePricePerKm: 20, extraKmPrice: 14, features: ['AC', 'Apple CarPlay'] }
+    ];
+
+    let currentVehicles = [...vehicles];
+
+    // Render Vehicles
+    function renderVehicles(data) {
+      const grid = document.getElementById('fleetGrid');
+      grid.innerHTML = '';
+
+      if (data.length === 0) {
+        grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-400">No vehicles found matching your criteria</div>';
+        document.getElementById('vehicleCount').textContent = '0';
+        return;
+      }
+
+      data.forEach(vehicle => {
+        const card = document.createElement('div');
+        card.className = 'vehicle-card glass-panel-lg rounded-2xl overflow-hidden group cursor-pointer';
+        card.innerHTML = `
+          <div class="relative overflow-hidden">
+            <img src="${vehicle.image}" alt="${vehicle.name}" class="card-image w-full h-48 object-cover transition-transform group-hover:scale-110">
+            <div class="absolute top-3 right-3">
+              <span class="bg-cyan-600 text-white text-xs px-3 py-1 rounded-full font-semibold">Available</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="text-xl font-semibold text-white mb-2">${vehicle.name}</h3>
+            <div class="flex items-center text-gray-400 text-sm mb-3">
+              <i class="fas fa-user mr-2 text-cyan-500"></i> ${vehicle.seatingCapacity}
+              <i class="fas fa-suitcase ml-3 mr-2 text-cyan-500"></i> ${vehicle.luggageCapacity}
+              ${vehicle.isAC ? '<i class="fas fa-fan ml-3 mr-2 text-cyan-500"></i> AC' : '<i class="fas fa-wind ml-3 mr-2 text-cyan-500"></i> Non-AC'}
+              <span class="ml-2 text-xs px-2 py-0.5 rounded bg-gray-700">${vehicle.vehicleType}</span>
+            </div>
+            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+              <div class="text-lg font-bold text-white">₹${vehicle.basePricePerKm}/km</div>
+              <button onclick="bookVehicle('${vehicle.id}')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium transition-colors">
+                Book Now
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      document.getElementById('vehicleCount').textContent = data.length;
+    }
+
+    // Filter Function
+    function filterVehicles() {
+      const tripType = document.getElementById('tripTypeFilter').value;
+      const vehicleType = document.getElementById('vehicleTypeFilter').value;
+      const priceRange = document.getElementById('priceFilter').value;
+      const acFilter = document.getElementById('acFilter').value;
+      const seatsFilter = document.getElementById('seatsFilter').value;
+      const sortBy = document.getElementById('sortBy').value;
+
+      let filtered = [...vehicles];
+
+      if (tripType) filtered = filtered.filter(v => v.category === tripType);
+      if (vehicleType) filtered = filtered.filter(v => v.vehicleType === vehicleType);
+      if (priceRange) {
+        const [min, max] = priceRange.split('-').map(Number);
+        if (priceRange === '100-9999') {
+          filtered = filtered.filter(v => v.basePricePerKm >= 100);
+        } else {
+          filtered = filtered.filter(v => v.basePricePerKm >= min && v.basePricePerKm <= max);
+        }
+      }
+      if (acFilter === 'true') filtered = filtered.filter(v => v.isAC);
+      if (acFilter === 'false') filtered = filtered.filter(v => !v.isAC);
+      if (seatsFilter) {
+        if (seatsFilter === '12+') {
+          filtered = filtered.filter(v => v.seatingCapacity > 12);
+        } else {
+          const maxSeats = parseInt(seatsFilter);
+          filtered = filtered.filter(v => v.seatingCapacity <= maxSeats);
+        }
+      }
+
+      // Sort
+      if (sortBy === 'basePricePerKm-desc') {
+        filtered.sort((a, b) => b.basePricePerKm - a.basePricePerKm);
+      } else if (sortBy === 'seatingCapacity') {
+        filtered.sort((a, b) => b.seatingCapacity - a.seatingCapacity);
+      } else {
+        filtered.sort((a, b) => a.basePricePerKm - b.basePricePerKm);
+      }
+
+      currentVehicles = filtered;
+      renderVehicles(filtered);
+    }
+
+    // Reset Filters
+    function resetFilters() {
+      document.getElementById('tripTypeFilter').value = '';
+      document.getElementById('vehicleTypeFilter').value = '';
+      document.getElementById('priceFilter').value = '';
+      document.getElementById('acFilter').value = '';
+      document.getElementById('seatsFilter').value = '';
+      document.getElementById('sortBy').value = 'basePricePerKm';
+      currentVehicles = [...vehicles];
+      renderVehicles(vehicles);
+    }
+
+    // Book Vehicle
+    function bookVehicle(id) {
+      const vehicle = vehicles.find(v => v.id === id);
+      if (vehicle) {
+        window.location.href = `/booking?vehicle=${vehicle.vehicleType}`;
+      }
+    }
+
+    // Event Listeners
+    document.getElementById('tripTypeFilter').addEventListener('change', filterVehicles);
+    document.getElementById('vehicleTypeFilter').addEventListener('change', filterVehicles);
+    document.getElementById('priceFilter').addEventListener('change', filterVehicles);
+    document.getElementById('acFilter').addEventListener('change', filterVehicles);
+    document.getElementById('seatsFilter').addEventListener('change', filterVehicles);
+    document.getElementById('sortBy').addEventListener('change', filterVehicles);
+
+    // Initial Render
+    renderVehicles(vehicles);
+  </script>
+</body>
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Now | Konan Travels</title>
+  <meta name="description" content="Book your travel service online">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#1a2935',
+              100: '#162129',
+              200: '#0f1821',
+              300: '#0b1218',
+              400: '#080c10',
+              500: '#040808',
+              600: '#000000',
+              700: '#0a1525',
+              800: '#02040a',
+              900: '#000000',
+            },
+            neon: {
+              cyan: '#00f3ff',
+              purple: '#bc13fe',
+              blue: '#0066ff',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.8s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #00f3ff 0%, #bc13fe 50%, #00f3ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-panel-lg {
+      background: rgba(20, 20, 35, 0.4);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -5px; left: 50%;
+      width: 0; height: 2px; background: linear-gradient(90deg, #00f3ff, #bc13fe);
+      transition: width 0.3s ease; transform: translateX(-50%);
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 60%; }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f3ff, #bc13fe); border-radius: 5px; }
+
+    /* Step Progress */
+    .step-progress {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+    .step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .step.completed .step-icon {
+      background: #10b981;
+      border-color: #10b981;
+    }
+    .step.active .step-icon {
+      background: linear-gradient(135deg, #00f3ff, #bc13fe);
+      border-color: #00f3ff;
+    }
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid #555;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: bold;
+    }
+    .step-label {
+      color: #9ca3af;
+      font-size: 12px;
+    }
+    .step.active .step-label {
+      color: #00f3ff;
+      font-weight: 600;
+    }
+    .completed .step-label {
+      color: #10b981;
+    }
+
+    /* Connect Line */
+    .progress-line-bg {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      top: 20px;
+      height: 2px;
+      background: rgba(255,255,255,0.1);
+      z-index: 1;
+    }
+    .progress-line-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00f3ff, #bc13fe);
+      transition: width 0.5s ease;
+    }
+
+    /* Vehicle Selection */
+    .vehicle-option {
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .vehicle-option:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,243,255,0.2);
+    }
+    .vehicle-option.selected {
+      border: 2px solid #00f3ff;
+      background: rgba(0,243,255,0.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 top-0 glass-panel-lg border-b border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <a href="/" class="text-2xl font-bold gradient-text tracking-wider">
+          KONAN <span class="text-white">TRAVELS</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="nav-link text-sm font-medium">Home</a>
+          <a href="/services" class="nav-link text-sm font-medium">Services</a>
+          <a href="/fleet" class="nav-link text-sm font-medium">Fleet</a>
+          <a href="/booking" class="nav-link active text-sm font-medium">Book Now</a>
+          <a href="/about" class="nav-link text-sm font-medium">About</a>
+          <a href="/contact" class="nav-link text-sm font-medium">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="relative pt-32 pb-12">
+    <div class="container-custom mx-auto px-4 text-center">
+      <h1 class="text-5xl font-bold mb-4">Book Your <span class="gradient-text">Ride</span></h1>
+      <p class="text-gray-400">Follow the steps below to book your travel service</p>
+    </div>
+  </section>
+
+  <!-- Booking Process -->
+  <section class="pb-20">
+    <div class="container-custom mx-auto px-4 max-w-4xl">
+      <!-- Step Progress -->
+      <div class="step-progress">
+        <div class="progress-line-bg">
+          <div class="progress-line-fill" id="progress-bar-fill"></div>
+        </div>
+        <div class="step active" id="step-indicator-1">
+          <div class="step-icon"><i class="fas fa-briefcase"></i></div>
+          <div class="step-label">Service</div>
+        </div>
+        <div class="step" id="step-indicator-2">
+          <div class="step-icon"><i class="fas fa-car"></i></div>
+          <div class="step-label">Vehicle</div>
+        </div>
+        <div class="step" id="step-indicator-3">
+          <div class="step-icon"><i class="fas fa-map-pin"></i></div>
+          <div class="step-label">Details</div>
+        </div>
+        <div class="step" id="step-indicator-4">
+          <div class="step-icon"><i class="fas fa-user"></i></div>
+          <div class="step-label">Contact</div>
+        </div>
+        <div class="step" id="step-indicator-5">
+          <div class="step-icon"><i class="fas fa-check"></i></div>
+          <div class="step-label">Confirm</div>
+        </div>
+      </div>
+
+      <!-- Booking Forms -->
+      <div class="glass-panel-lg rounded-2xl p-6 md:p-8">
+        <!-- Step 1: Service Type -->
+        <div id="step-1" class="step-content">
+          <h2 class="text-2xl font-semibold mb-6">Select Service Type</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="vehicle-option glass-panel rounded-xl p-5 border hover:border-cyan-500/50" onclick="selectService('local', this)">
+              <div class="w-12 h-12 bg-gradient-to-br from-cyan-600/20 to-blue-600/20 rounded-lg flex items-center justify-center mb-3">
+                <i class="fas fa-car text-2xl text-cyan-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">Local Car Rental</h3>
+              <p class="text-gray-400 text-sm mb-3">For city travel within 250km</p>
+              <div class="text-cyan-400 text-sm font-medium">Starting from ₹12/km</div>
+            </div>
+            <div class="vehicle-option glass-panel rounded-xl p-5 border hover:border-purple-500/50" onclick="selectService('outstation', this)">
+              <div class="w-12 h-12 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-lg flex items-center justify-center mb-3">
+                <i class="fas fa-road text-2xl text-purple-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">Outstation Trip</h3>
+              <p class="text-gray-400 text-sm mb-3">Inter-city travel with driver</p>
+              <div class="text-purple-400 text-sm font-medium">Starting from ₹15/km</div>
+            </div>
+            <div class="vehicle-option glass-panel rounded-xl p-5 border hover:border-amber-500/50" onclick="selectService('airport', this)">
+              <div class="w-12 h-12 bg-gradient-to-br from-amber-600/20 to-orange-600/20 rounded-lg flex items-center justify-center mb-3">
+                <i class="fas fa-plane text-2xl text-amber-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">Airport Transfer</h3>
+              <p class="text-gray-400 text-sm mb-3">Punctual airport pickups</p>
+              <div class="text-amber-400 text-sm font-medium">Starting from ₹2500</div>
+            </div>
+            <div class="vehicle-option glass-panel rounded-xl p-5 border hover:border-emerald-500/50" onclick="selectService('loading', this)">
+              <div class="w-12 h-12 bg-gradient-to-br from-emerald-600/20 to-green-600/20 rounded-lg flex items-center justify-center mb-3">
+                <i class="fas fa-boxes text-2xl text-emerald-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">Loading/Unloading</h3>
+              <p class="text-gray-400 text-sm mb-3">Goods transport with staff</p>
+              <div class="text-emerald-400 text-sm font-medium">Starting from ₹3000</div>
+            </div>
+            <div class="vehicle-option glass-panel rounded-xl p-5 border hover:border-red-500/50" onclick="selectService('house_shifting', this)">
+              <div class="w-12 h-12 bg-gradient-to-br from-red-600/20 to-pink-600/20 rounded-lg flex items-center justify-center mb-3">
+                <i class="fas fa-home text-2xl text-red-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">House Shifting</h3>
+              <p class="text-gray-400 text-sm mb-3">Complete home relocation</p>
+              <div class="text-red-400 text-sm font-medium">Starting from ₹5000</div>
+            </div>
+            <div class="vehicle-option glass-panel rounded-xl p-5 border hover:border-teal-500/50" onclick="selectService('goods', this)">
+              <div class="w-12 h-12 bg-gradient-to-br from-teal-600/20 to-cyan-600/20 rounded-lg flex items-center justify-center mb-3">
+                <i class="fas fa-truck text-2xl text-teal-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">Goods Transport</h3>
+              <p class="text-gray-400 text-sm mb-3">Bulk cargo movement</p>
+              <div class="text-teal-400 text-sm font-medium">Starting from ₹8/km</div>
+            </div>
+          </div>
+          <div class="flex justify-end mt-6">
+            <button onclick="nextStep(2)" id="btn-step-1" disabled class="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+              Next Step <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Vehicle Selection -->
+        <div id="step-2" class="step-content hidden">
+          <h2 class="text-2xl font-semibold mb-6">Select Vehicle</h2>
+          <div id="vehicle-list" class="space-y-4">
+            <!-- Vehicles will be populated by JS -->
+          </div>
+          <div class="flex justify-between mt-6">
+            <button onclick="nextStep(1)" class="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">
+              <i class="fas fa-arrow-left mr-2"></i> Back
+            </button>
+            <button onclick="nextStep(3)" id="btn-step-2" disabled class="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+              Next Step <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Trip Details -->
+        <div id="step-3" class="step-content hidden">
+          <h2 class="text-2xl font-semibold mb-6">Trip Details</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Pickup Location</label>
+                <div class="relative">
+                  <i class="fas fa-map-marker-alt absolute left-3 top-3 text-gray-500"></i>
+                  <input type="text" id="pickupLocation" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none" placeholder="Enter pickup location">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Drop Location</label>
+                <div class="relative">
+                  <i class="fas fa-map-marker-alt absolute left-3 top-3 text-gray-500 rotate-180"></i>
+                  <input type="text" id="dropLocation" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none" placeholder="Enter drop location">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Trip Type</label>
+                <select id="tripType" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 px-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+                  <option value="one-way">One Way</option>
+                  <option value="round-trip">Round Trip</option>
+                </select>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Pickup Date</label>
+                <div class="relative">
+                  <i class="fas fa-calendar absolute left-3 top-3 text-gray-500"></i>
+                  <input type="date" id="pickupDate" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Pickup Time</label>
+                <div class="relative">
+                  <i class="fas fa-clock absolute left-3 top-3 text-gray-500"></i>
+                  <input type="time" id="pickupTime" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Return Date (Round Trip)</label>
+                <div class="relative">
+                  <i class="fas fa-calendar-alt absolute left-3 top-3 text-gray-500"></i>
+                  <input type="date" id="returnDate" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Number of Passengers</label>
+                <input type="number" id="passengers" min="1" max="20" value="1" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 px-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+              </div>
+            </div>
+          </div>
+          <div class="mt-6">
+            <label class="block text-sm text-gray-400 mb-2">Special Notes/Requirements</label>
+            <textarea id="specialNotes" rows="3" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none" placeholder="Any special requirements..."></textarea>
+          </div>
+          <div class="flex justify-between mt-6">
+            <button onclick="nextStep(2)" class="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">
+              <i class="fas fa-arrow-left mr-2"></i> Back
+            </button>
+            <button onclick="nextStep(4)" id="btn-step-3" disabled class="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+              Next Step <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Customer Details -->
+        <div id="step-4" class="step-content hidden">
+          <h2 class="text-2xl font-semibold mb-6">Customer Details</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Full Name</label>
+              <input type="text" id="customerName" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 px-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none" placeholder="Your name">
+            </div>
+            <div>
+              <label class="block text-sm text-gray-400 mb-2">Phone Number</label>
+              <input type="tel" id="customerPhone" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 px-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none" placeholder="Your phone number">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm text-gray-400 mb-2">Email</label>
+              <input type="email" id="customerEmail" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 px-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none" placeholder="Your email">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm text-gray-400 mb-2">Payment Preference</label>
+              <select id="paymentPreference" class="w-full bg-black/30 border border-white/10 rounded-lg py-3 px-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none">
+                <option value="cash">Cash (On arrival)</option>
+                <option value="online">Online Payment</option>
+                <option value="upi">UPI</option>
+                <option value="card">Credit/Debit Card</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-between mt-6">
+            <button onclick="nextStep(3)" class="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">
+              <i class="fas fa-arrow-left mr-2"></i> Back
+            </button>
+            <button onclick="nextStep(5)" id="btn-step-4" disabled class="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+              Next Step <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 5: Confirm Booking -->
+        <div id="step-5" class="step-content hidden">
+          <h2 class="text-2xl font-semibold mb-6">Confirm Booking</h2>
+          <div class="glass-panel rounded-xl p-6 mb-6">
+            <h3 class="text-lg font-semibold text-cyan-400 mb-4 flex items-center">
+              <i class="fas fa-info-circle mr-2"></i> Booking Summary
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <p class="text-gray-400">Service Type</p>
+                <p class="text-white font-medium" id="summary-service">-</p>
+              </div>
+              <div>
+                <p class="text-gray-400">Vehicle Type</p>
+                <p class="text-white font-medium" id="summary-vehicle">-</p>
+              </div>
+              <div>
+                <p class="text-gray-400">Pickup Location</p>
+                <p class="text-white font-medium" id="summary-pickup">-</p>
+              </div>
+              <div>
+                <p class="text-gray-400">Drop Location</p>
+                <p class="text-white font-medium" id="summary-drop">-</p>
+              </div>
+              <div>
+                <p class="text-gray-400">Date & Time</p>
+                <p class="text-white font-medium" id="summary-date">-</p>
+              </div>
+              <div>
+                <p class="text-gray-400">Trip Type</p>
+                <p class="text-white font-medium" id="summary-trip">-</p>
+              </div>
+            </div>
+            <div class="border-t border-white/10 mt-4 pt-4">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-400">Estimated Price</span>
+                <span class="text-2xl font-bold text-cyan-400" id="summary-price">₹0</span>
+              </div>
+            </div>
+          </div>
+          <div class="glass-panel rounded-xl p-6 mb-6">
+            <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+              <i class="fas fa-user mr-2"></i> Customer Information
+            </h3>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+              <div>
+                <p class="text-gray-400">Name</p>
+                <p class="text-white font-medium" id="summary-name">-</p>
+              </div>
+              <div>
+                <p class="text-gray-400">Phone</p>
+                <p class="text-white font-medium" id="summary-phone">-</p>
+              </div>
+              <div>
+                <p class="text-gray-400">Email</p>
+                <p class="text-white font-medium" id="summary-email">-</p>
+              </div>
+            </div>
+          </div>
+          <div class="glass-panel rounded-xl p-6 mb-6">
+            <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+              <i class="fas fa-check-circle mr-2"></i> Special Requirements
+            </h3>
+            <p class="text-white" id="summary-notes">None</p>
+          </div>
+          <form id="booking-form">
+            <div class="flex justify-between mt-8">
+              <button type="button" onclick="nextStep(4)" class="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white rounded-lg font-semibold transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i> Back
+              </button>
+              <button type="submit" class="px-8 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:shadow-lg hover:shadow-cyan-500/30 text-white rounded-lg font-semibold transition-all">
+                <i class="fas fa-check mr-2"></i> Confirm Booking
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black pt-16 pb-8 border-t border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h2 class="text-2xl font-bold mb-4 gradient-text">KONAN <span class="text-white">TRAVELS</span></h2>
+          <p class="text-gray-400 text-sm mb-4">Premium travel and vehicle rental services for all your transportation needs.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/" class="hover:text-cyan-400 transition-colors">Home</a></li>
+            <li><a href="/services" class="hover:text-cyan-400 transition-colors">Services</a></li>
+            <li><a href="/fleet" class="hover:text-cyan-400 transition-colors">Fleet</a></li>
+            <li><a href="/booking" class="hover:text-cyan-400 transition-colors">Book Now</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Services</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/booking?service=local" class="hover:text-cyan-400 transition-colors">Local Car Rental</a></li>
+            <li><a href="/booking?service=outstation" class="hover:text-cyan-400 transition-colors">Outstation Trips</a></li>
+            <li><a href="/booking?service=airport" class="hover:text-cyan-400 transition-colors">Airport Transfer</a></li>
+            <li><a href="/booking?service=house_shifting" class="hover:text-cyan-400 transition-colors">House Shifting</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt text-cyan-500 mr-2 mt-1"></i>
+              <span>123, Transport Nagar,<br>New Delhi, India</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone text-cyan-500 mr-2"></i>
+              <span>+91 98765 43210</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope text-cyan-500 mr-2"></i>
+              <span>info@konantravels.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 Konan Travels. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Vehicle Data
+    const vehicles = {
+      local: [
+        { id: 1, name: 'Compact Hatchback', price: 12, seats: 4, ac: true, image: '/images/compact_hatchback.png' },
+        { id: 2, name: 'Premium Sedan', price: 15, seats: 4, ac: true, image: '/images/premium_sedan.png' },
+        { id: 3, name: 'Luxury Sedan', price: 18, seats: 4, ac: true, image: '/images/executive_sedan.png' },
+        { id: 4, name: 'Compact SUV', price: 20, seats: 5, ac: true, image: '/images/economy_suv.png' }
+      ],
+      outstation: [
+        { id: 5, name: 'Economy SUV', price: 20, seats: 5, ac: true, image: '/images/economy_suv.png' },
+        { id: 6, name: 'Luxury SUV', price: 25, seats: 7, ac: true, image: '/images/luxury_suv.png' },
+        { id: 7, name: 'Tempo Traveller', price: 28, seats: 12, ac: true, image: '/images/tempo_traveller.png' },
+        { id: 8, name: 'Mini Van', price: 22, seats: 8, ac: true, image: '/images/pickup_van.png' }
+      ],
+      cargo: [
+        { id: 9, name: 'Loading Vehicle', price: 25, seats: 2, ac: true, image: '/images/pickup_van.png' },
+        { id: 10, name: 'Pickup Van', price: 22, seats: 3, ac: true, image: '/images/pickup_van.png' },
+        { id: 11, name: 'Mini Truck', price: 20, seats: 3, ac: false, image: '/images/mini_truck.png' },
+        { id: 12, name: 'Large Truck', price: 30, seats: 2, ac: true, image: '/images/mini_truck.png' }
+      ]
+    };
+
+    let currentService = null;
+    let currentStep = 1;
+    let selectedVehicle = null;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set min date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('pickupDate').min = today;
+      document.getElementById('returnDate').min = today;
+
+      // Check URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      const vehicleParam = urlParams.get('vehicle');
+      if (vehicleParam) {
+        setTimeout(() => {
+          const vehiclesContainer = document.getElementById('vehicle-list');
+          const selected = vehicles.local.find(v => v.name.toLowerCase().includes(vehicleParam));
+          if (selected) {
+            selectService('local', null, selected);
+          }
+        }, 500);
+      }
+    });
+
+    // Select Service
+    function selectService(serviceType, element, vehicleOverride = null) {
+      // Clear previous selections
+      document.querySelectorAll('.vehicle-option').forEach(el => el.classList.remove('border-cyan-500/50', 'bg-cyan-500/5'));
+      if (element) element.classList.add('border-cyan-500/50', 'bg-cyan-500/5');
+
+      currentService = serviceType;
+      document.getElementById('btn-step-1').disabled = false;
+
+      // Show vehicles
+      const vehicleList = document.getElementById('vehicle-list');
+      const vehiclesData = vehicles[serviceType] || vehicles.local;
+      vehicleList.innerHTML = '';
+
+      vehiclesData.forEach(v => {
+        const vehicleDiv = document.createElement('div');
+        vehicleDiv.className = 'vehicle-option glass-panel rounded-xl p-5 border hover:border-cyan-500/50 cursor-pointer';
+        if (vehicleOverride && v.id === vehicleOverride.id) {
+          vehicleDiv.classList.add('border-cyan-500', 'bg-cyan-500/10');
+          selectedVehicle = v;
+        }
+        vehicleDiv.innerHTML = `
+          <div class="flex items-center">
+            <img src="${v.image}" class="w-20 h-20 object-cover rounded-lg mr-4" alt="${v.name}">
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold text-white">${v.name}</h3>
+              <div class="flex items-center text-gray-400 text-sm mt-2">
+                <i class="fas fa-user mr-2 text-cyan-500"></i> ${v.seats}
+                <i class="fas fa-fan ml-3 mr-2 text-cyan-500"></i> ${v.ac ? 'AC' : 'Non-AC'}
+              </div>
+              <div class="text-cyan-400 font-bold text-lg mt-2">₹${v.price}/km</div>
+            </div>
+          </div>
+        `;
+        vehicleDiv.onclick = () => selectVehicle(v, vehicleDiv);
+        vehicleList.appendChild(vehicleDiv);
+      });
+    }
+
+    // Select Vehicle
+    function selectVehicle(vehicle, element) {
+      selectedVehicle = vehicle;
+      document.querySelectorAll('.vehicle-option').forEach(el => el.classList.remove('border-cyan-500', 'bg-cyan-500/10'));
+      element.classList.add('border-cyan-500', 'bg-cyan-500/10');
+      document.getElementById('btn-step-2').disabled = false;
+    }
+
+    // Next Step
+    function nextStep(step) {
+      // Hide all steps
+      document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.step.completed').forEach(el => el.classList.remove('completed'));
+
+      // Show current step
+      document.getElementById(`step-${step}`).classList.remove('hidden');
+
+      // Update step indicators
+      for (let i = 1; i <= step; i++) {
+        const stepEl = document.getElementById(`step-indicator-${i}`);
+        stepEl.classList.add('completed');
+        if (i < step) {
+          stepEl.classList.add('completed');
+        }
+      }
+      const currentStepEl = document.getElementById(`step-indicator-${step}`);
+      currentStepEl.classList.add('active');
+
+      // Update progress bar fill
+      const progressPercent = ((step - 1) / 4) * 100;
+      document.getElementById('progress-bar-fill').style.width = `${progressPercent}%`;
+
+      currentStep = step;
+
+      // Update summary when reaching step 5
+      if (step === 5) {
+        updateSummary();
+      }
+    }
+
+    // Update Summary
+    function updateSummary() {
+      const serviceTypes = {
+        local: 'Local Car Rental',
+        outstation: 'Outstation Trip',
+        airport: 'Airport Transfer',
+        loading: 'Loading/Unloading',
+        house_shifting: 'House Shifting',
+        goods: 'Goods Transport',
+        tempo: 'Tempo Traveller',
+        driver: 'Driver On Demand'
+      };
+
+      document.getElementById('summary-service').textContent = serviceTypes[currentService] || '-';
+      document.getElementById('summary-vehicle').textContent = selectedVehicle ? selectedVehicle.name : '-';
+      document.getElementById('summary-pickup').textContent = document.getElementById('pickupLocation').value || '-';
+      document.getElementById('summary-drop').textContent = document.getElementById('dropLocation').value || '-';
+      document.getElementById('summary-date').textContent = `${document.getElementById('pickupDate').value} at ${document.getElementById('pickupTime').value}`;
+      document.getElementById('summary-trip').textContent = document.getElementById('tripType').value || '-';
+      document.getElementById('summary-name').textContent = document.getElementById('customerName').value || '-';
+      document.getElementById('summary-phone').textContent = document.getElementById('customerPhone').value || '-';
+      document.getElementById('summary-email').textContent = document.getElementById('customerEmail').value || '-';
+      document.getElementById('summary-notes').textContent = document.getElementById('specialNotes').value || 'None';
+
+      // Calculate estimated price
+      const basePrice = selectedVehicle ? selectedVehicle.price : 0;
+      const distance = 50; // Default 50km estimate
+      const price = basePrice * distance;
+      document.getElementById('summary-price').textContent = `₹${price}`;
+    }
+
+    // Booking Form Submission
+    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!currentService || !selectedVehicle) {
+        alert('Please select service and vehicle');
+        return;
+      }
+
+      // Validate required fields
+      if (!document.getElementById('pickupLocation').value) {
+        alert('Please enter pickup location');
+        return;
+      }
+      if (!document.getElementById('dropLocation').value) {
+        alert('Please enter drop location');
+        return;
+      }
+
+      const bookingData = {
+        customerName: document.getElementById('customerName').value,
+        customerPhone: document.getElementById('customerPhone').value,
+        customerEmail: document.getElementById('customerEmail').value,
+        serviceType: currentService,
+        vehicleType: selectedVehicle.name,
+        pickupLocation: document.getElementById('pickupLocation').value,
+        dropLocation: document.getElementById('dropLocation').value,
+        pickupDate: document.getElementById('pickupDate').value,
+        pickupTime: document.getElementById('pickupTime').value,
+        returnDate: document.getElementById('returnDate').value,
+        tripType: document.getElementById('tripType').value,
+        numberOfPassengers: document.getElementById('passengers').value,
+        specialNotes: document.getElementById('specialNotes').value,
+        paymentPreference: document.getElementById('paymentPreference').value,
+        estimatedPrice: selectedVehicle.price * 50
+      };
+
+      try {
+        const response = await fetch('/api/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bookingData)
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          alert('Booking submitted successfully! We will contact you shortly.');
+          document.getElementById('booking-form').reset();
+          nextStep(1);
+          selectedVehicle = null;
+          document.getElementById('vehicle-list').innerHTML = '';
+          document.getElementById('btn-step-1').disabled = true;
+          document.getElementById('btn-step-2').disabled = true;
+        } else {
+          alert('Failed to submit booking. Please try again.');
+        }
+      } catch (error) {
+        alert('Network error. Please try again.');
+      }
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

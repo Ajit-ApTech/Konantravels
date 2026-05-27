@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ | Konan Travels</title>
+  <meta name="description" content="Frequently Asked Questions about Konan Travels">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            neon: { cyan: '#00f3ff', purple: '#bc13fe', blue: '#0066ff' }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.8s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+            slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #00f3ff 0%, #bc13fe 50%, #00f3ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -5px; left: 50%;
+      width: 0; height: 2px; background: linear-gradient(90deg, #00f3ff, #bc13fe);
+      transition: width 0.3s ease; transform: translateX(-50%);
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 60%; }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f3ff, #bc13fe); border-radius: 5px; }
+    .faq-item { transition: all 0.3s; }
+    .faq-item:hover { transform: translateX(5px); }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 top-0 glass-panel-lg border-b border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <a href="/" class="text-2xl font-bold gradient-text tracking-wider">
+          KONAN <span class="text-white">TRAVELS</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="nav-link text-sm font-medium">Home</a>
+          <a href="/services" class="nav-link text-sm font-medium">Services</a>
+          <a href="/fleet" class="nav-link text-sm font-medium">Fleet</a>
+          <a href="/booking" class="nav-link text-sm font-medium">Book Now</a>
+          <a href="/about" class="nav-link text-sm font-medium">About</a>
+          <a href="/contact" class="nav-link text-sm font-medium">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="relative pt-32 pb-16">
+    <div class="container-custom mx-auto px-4 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">Frequently Asked <span class="gradient-text">Questions</span></h1>
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto">Quick answers to common questions about our services</p>
+    </div>
+  </section>
+
+  <!-- FAQ Categories -->
+  <section class="py-8">
+    <div class="container-custom mx-auto px-4">
+      <div class="flex flex-wrap gap-4 justify-center mb-12">
+        <button onclick="filterFAQ('all')" class="px-6 py-2 bg-cyan-600/20 text-cyan-400 rounded-lg font-medium hover:bg-cyan-600/30 transition-all active">All Categories</button>
+        <button onclick="filterFAQ('booking')" class="px-6 py-2 bg-gray-700/50 text-gray-400 rounded-lg font-medium hover:bg-gray-600/50 hover:text-white transition-all">Booking</button>
+        <button onclick="filterFAQ('payment')" class="px-6 py-2 bg-gray-700/50 text-gray-400 rounded-lg font-medium hover:bg-gray-600/50 hover:text-white transition-all">Payment</button>
+        <button onclick="filterFAQ('cancellation')" class="px-6 py-2 bg-gray-700/50 text-gray-400 rounded-lg font-medium hover:bg-gray-600/50 hover:text-white transition-all">Cancellation</button>
+        <button onclick="filterFAQ('vehicle')" class="px-6 py-2 bg-gray-700/50 text-gray-400 rounded-lg font-medium hover:bg-gray-600/50 hover:text-white transition-all">Vehicle</button>
+        <button onclick="filterFAQ('general')" class="px-6 py-2 bg-gray-700/50 text-gray-400 rounded-lg font-medium hover:bg-gray-600/50 hover:text-white transition-all">General</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ List -->
+  <section class="py-16">
+    <div class="container-custom mx-auto px-4 max-w-3xl">
+      <div class="space-y-4" id="faq-list">
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>How do I book a vehicle?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            You can book a vehicle through multiple channels - via our website, mobile app, or by calling our customer support. Simply select your preferred vehicle, choose your dates and times, and complete the booking process with the required details.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>What payment methods do you accept?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            We accept various payment methods including cash, UPI, credit/debit cards, digital wallets (Paytm, Google Pay, PhonePe), and net banking. For advance bookings, you can also make online payments through our secure payment gateway.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>Are drivers included in the price?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            Yes, all our vehicles come with professional, experienced drivers unless you opt for a self-drive option. Our drivers are trained, verified, and wear proper uniforms.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>Can I modify my booking?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            Yes, you can modify your booking up to 2 hours before the scheduled pickup time, subject to vehicle availability. Please contact our customer support to make any changes to your booking.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>What is your cancellation policy?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            For cancellations made more than 24 hours before pickup: Full refund. For cancellations within 24 hours: 50% refund. For no-shows: No refund. Please note that cancellation charges may vary for special packages and corporate bookings.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>Do you offer outstation services?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            Yes, we provide comprehensive outstation travel services across major cities and tourist destinations. Our packages include driver allowance, fuel charges, and toll taxes. We also offer one-way and round-trip options.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>How are the drivers verified?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            All our drivers undergo a thorough verification process including background checks, driving license verification, and training programs. They are also required to wear uniforms and carry ID cards for your safety.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>Are the vehicles air-conditioned?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            Most of our vehicles come with air conditioning. You can filter vehicles by AC availability during booking. All our AC vehicles are regularly maintained for optimal comfort.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>What if my flight is delayed?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            We monitor flight schedules and provide free waiting time for delayed flights. For domestic flights, we offer 1 hour of free waiting time. For international flights, it's 2 hours. Beyond that, nominal charges may apply.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>Do you offer corporate packages?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            Yes, we offer special corporate packages with discounted rates, monthly billing options, and dedicated account managers. Contact our sales team to discuss your corporate travel requirements.
+          </div>
+        </div>
+        <div class="faq-item glass-panel rounded-xl p-6 border border-white/5">
+          <h3 class="text-xl font-semibold text-white flex items-center justify-between cursor-pointer" onclick="toggleFAQ(this)">
+            <span>Is there a security deposit?</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </h3>
+          <div class="faq-answer mt-4 text-gray-400 text-sm">
+            No security deposit is required for most bookings. For special vehicles, luxury cars, or long-term rentals, a refundable security deposit may be applicable, which will be clearly communicated during booking.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 bg-gradient-to-b from-black/40 to-black border-t border-white/5">
+    <div class="container-custom mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-6">Still Have Questions?</h2>
+      <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+        Can't find the answer you're looking for? Reach out to our support team and we'll be happy to help.
+      </p>
+      <a href="/contact" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl font-semibold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all hover:scale-105">
+        <i class="fas fa-envelope mr-2"></i>
+        Contact Us
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black pt-16 pb-8 border-t border-white/5">
+    <div class="container-custom mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h2 class="text-2xl font-bold mb-4 gradient-text">KONAN <span class="text-white">TRAVELS</span></h2>
+          <p class="text-gray-400 text-sm mb-4">Premium travel and vehicle rental services for all your transportation needs.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/" class="hover:text-cyan-400 transition-colors">Home</a></li>
+            <li><a href="/services" class="hover:text-cyan-400 transition-colors">Services</a></li>
+            <li><a href="/fleet" class="hover:text-cyan-400 transition-colors">Fleet</a></li>
+            <li><a href="/booking" class="hover:text-cyan-400 transition-colors">Book Now</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Services</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/booking?service=local" class="hover:text-cyan-400 transition-colors">Local Car Rental</a></li>
+            <li><a href="/booking?service=outstation" class="hover:text-cyan-400 transition-colors">Outstation Trips</a></li>
+            <li><a href="/booking?service=airport" class="hover:text-cyan-400 transition-colors">Airport Transfer</a></li>
+            <li><a href="/booking?service=house_shifting" class="hover:text-cyan-400 transition-colors">House Shifting</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt text-cyan-500 mr-2 mt-1"></i>
+              <span>123, Transport Nagar,<br>New Delhi, India</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone text-cyan-500 mr-2"></i>
+              <span>+91 98765 43210</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope text-cyan-500 mr-2"></i>
+              <span>info@konantravels.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 Konan Travels. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ Toggle
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      const icon = element.querySelector('i');
+      if (answer.style.display === 'block') {
+        answer.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        answer.style.display = 'block';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      }
+    }
+
+    // Filter FAQ
+    function filterFAQ(category) {
+      const faqs = document.querySelectorAll('.faq-item');
+      faqs.forEach(faq => {
+        if (category === 'all') {
+          faq.style.display = 'block';
+        } else {
+          if (faq.innerText.toLowerCase().includes(category)) {
+            faq.style.display = 'block';
+          } else {
+            faq.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    // Close all answers initially
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.faq-answer').forEach(el => el.style.display = 'none');
+    });
+  </script>
+</body>
+</html>
