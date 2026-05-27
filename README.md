@@ -1,3 +1,13 @@
+---
+title: Konan Travels
+emoji: 🚗
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Konan Travels - Premium Travel Booking Platform
 
 A modern, premium travel and vehicle rental booking website built with Node.js, Express, MongoDB, and Tailwind CSS.
